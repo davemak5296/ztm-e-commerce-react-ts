@@ -8,3 +8,12 @@
 body {
   padding: 20px 40px;
 };
+
+@layer base {
+  h1 {
+    @apply text-3xl;
+  }
+  h2 {
+    @apply text-2xl;
+  }
+}
