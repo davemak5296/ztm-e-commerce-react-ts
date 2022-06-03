@@ -19,7 +19,7 @@ const Navigation = () => {
           <Link to="/shop" className="py-2.5 px-3.5">
             CONTACT
           </Link>
-          <Link to="/sign-in" className="py-2.5 px-3.5">
+          <Link to="/auth" className="py-2.5 px-3.5">
             SIGN IN
           </Link>
         </div>

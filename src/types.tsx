@@ -26,6 +26,7 @@ export interface btnProps {
   children: ReactNode;
   type: "button" | "reset" | "submit" | undefined;
   buttonType: string;
+  onClick?: () => void;
 }
 
 export interface btnTypes {

@@ -11,7 +11,7 @@ const Button = (props: btnProps) => {
   const { children, buttonType, ...otherProps } = props;
   return (
     <button
-      className={`flex h-[50px] w-auto min-w-[165px] cursor-pointer justify-center px-9 font-bold uppercase leading-[50px] ${btnClass[buttonType]}`}
+      className={`flex h-[50px] w-auto min-w-[165px] cursor-pointer justify-center px-9 text-xs font-bold uppercase leading-[50px] ${btnClass[buttonType]}`}
       {...otherProps}
     >
       {children}

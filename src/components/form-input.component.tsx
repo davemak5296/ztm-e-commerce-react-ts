@@ -11,7 +11,7 @@ const FormInput = (props: formInputProps) => {
       <label
         className={`${
           props.value.length > 0 ? "top-[-14px] text-xs text-black" : "top-2.5 text-gray-500"
-        } transition-top pointer-events-none absolute left-1.5 delay-[0ms] duration-300 ease-in peer-focus:top-[-14px] peer-focus:text-xs peer-focus:text-black`}
+        } transition-top pointer-events-none absolute left-1.5 delay-[0ms] duration-300 ease-[cubic-bezier(0.2,1.0.2,1)] peer-focus:top-[-14px] peer-focus:text-xs peer-focus:text-black`}
       >
         {label}
       </label>

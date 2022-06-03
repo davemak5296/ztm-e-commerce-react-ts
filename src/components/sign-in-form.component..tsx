@@ -1,51 +1,55 @@
-import { FirebaseError } from "firebase/app";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { FirebaseError } from "firebase/app";
 import {
   createAuthUserWithEmailAndPw,
+  signInAuthUserWithEmailAndPw,
   createUserDocFromAuth,
+  signInWithGooglePopup,
 } from "../utils/firebase/firebase.utils";
 import FormInput from "./form-input.component";
 import Button from "./button.component";
 
 const defaultFormFields = {
-  displayName: "",
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
-const signUpForm = () => {
+const signInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword } = formFields;
-
-  const [isErr, setIsErr] = useState(false);
-  const errMsg = <div>Passwords unmatched!</div>;
+  const { email, password } = formFields;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
+  };
+
+  const signInWithGoogle = () => {
+    const handler = async () => {
+      const { user } = await signInWithGooglePopup();
+      await createUserDocFromAuth(user);
+    };
+    handler().catch(Error);
   };
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     const handler = async () => {
       event.preventDefault();
 
-      if (password !== confirmPassword) {
-        alert("Passwords unmatch!");
-        resetFormFields();
-        return;
-      }
-
       try {
-        const res = await createAuthUserWithEmailAndPw(email, password);
-        if (res !== undefined) {
-          await createUserDocFromAuth(res.user, { displayName });
-        }
+        const res = await signInAuthUserWithEmailAndPw(email, password);
+        console.log(res);
         resetFormFields();
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
-          console.log(error.code);
-          if (error.code === "auth/email-already-in-use") {
-            alert("Cannot sign up, email already in use.");
+          switch (error.code) {
+            case "auth/wrong-password":
+              alert("Wrong password.");
+              break;
+            case "auth/user-not-found":
+              alert("User not exists.");
+              break;
+            default:
+              console.log(error.code);
+              break;
           }
         }
       }
@@ -61,18 +65,9 @@ const signUpForm = () => {
 
   return (
     <div className="flex w-[380px] flex-col">
-      <h2 className="my-2.5">Don&apos;t have an account?</h2>
-      <span>Sign up with your email and password</span>
+      <h2 className="my-2.5">I already have an account</h2>
+      <span>Sign in with your email and password</span>
       <form action="" onSubmit={handleSubmit}>
-        {isErr ? errMsg : null}
-        <FormInput
-          label="Display Name"
-          type="text"
-          onChange={handleChange}
-          name="displayName"
-          value={displayName}
-          required
-        />
         <FormInput
           label="Email"
           type="email"
@@ -89,20 +84,17 @@ const signUpForm = () => {
           value={password}
           required
         />
-        <FormInput
-          label="Confirm Password"
-          type="password"
-          onChange={handleChange}
-          name="confirmPassword"
-          value={confirmPassword}
-          required
-        />
-        <Button type="submit" buttonType="default">
-          sign up
-        </Button>
+        <div className="flex justify-between">
+          <Button type="submit" buttonType="default">
+            sign in
+          </Button>
+          <Button onClick={signInWithGoogle} type="button" buttonType="google">
+            sign in with google
+          </Button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default signUpForm;
+export default signInForm;
