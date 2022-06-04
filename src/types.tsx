@@ -1,5 +1,5 @@
 import { ChangeEventHandler, ReactNode } from "react";
-
+import { User } from "firebase/auth";
 export interface category {
   id: number;
   title: string;
@@ -31,4 +31,22 @@ export interface btnProps {
 
 export interface btnTypes {
   [key: string]: string;
+}
+
+export interface userContextType {
+  currUser: User | null;
+  setCurrUser: (currUser: User | null) => User | null | void;
+}
+
+export type onAuthNextFnType = (user: User | null) => void;
+export interface productsType {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+}
+
+export interface productsContextType {
+  pdt: productsType[];
+  setPdt: (pdt: productsType[]) => productsType[] | void;
 }

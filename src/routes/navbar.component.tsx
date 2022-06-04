@@ -1,8 +1,15 @@
+import { useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as Crwnlogo } from "../assets/crown.svg";
+import { signOutUser } from "../utils/firebase/firebase.utils";
+import { UserContext } from "../contexts/user.context";
+import { userContextType } from "../types";
 import "../main.css";
 
 const Navigation = () => {
+  const { currUser } = useContext(UserContext) as userContextType;
+  // console.log(currUserObj?.setCurrUser(null));
+
   return (
     <>
       <nav className="mb-6 flex h-[70px] w-full justify-between">
@@ -19,9 +26,15 @@ const Navigation = () => {
           <Link to="/shop" className="py-2.5 px-3.5">
             CONTACT
           </Link>
-          <Link to="/auth" className="py-2.5 px-3.5">
-            SIGN IN
-          </Link>
+          {currUser ? (
+            <span onClick={signOutUser} className="py-2.5 px-3.5">
+              SIGN OUT
+            </span>
+          ) : (
+            <Link to="/auth" className="py-2.5 px-3.5">
+              SIGN IN
+            </Link>
+          )}
         </div>
       </nav>
       {/* other components */}

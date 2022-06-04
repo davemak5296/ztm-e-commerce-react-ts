@@ -1,7 +1,7 @@
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { FirebaseError } from "firebase/app";
+import { UserCredential } from "firebase/auth";
 import {
-  createAuthUserWithEmailAndPw,
   signInAuthUserWithEmailAndPw,
   createUserDocFromAuth,
   signInWithGooglePopup,
@@ -24,8 +24,7 @@ const signInForm = () => {
 
   const signInWithGoogle = () => {
     const handler = async () => {
-      const { user } = await signInWithGooglePopup();
-      await createUserDocFromAuth(user);
+      await signInWithGooglePopup();
     };
     handler().catch(Error);
   };
@@ -35,8 +34,8 @@ const signInForm = () => {
       event.preventDefault();
 
       try {
-        const res = await signInAuthUserWithEmailAndPw(email, password);
-        console.log(res);
+        const res = (await signInAuthUserWithEmailAndPw(email, password)) as UserCredential;
+
         resetFormFields();
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {

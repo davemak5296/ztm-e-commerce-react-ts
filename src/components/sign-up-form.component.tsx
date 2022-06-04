@@ -6,6 +6,7 @@ import {
 } from "../utils/firebase/firebase.utils";
 import FormInput from "./form-input.component";
 import Button from "./button.component";
+import { UserCredential } from "firebase/auth";
 
 const defaultFormFields = {
   displayName: "",
@@ -17,9 +18,6 @@ const defaultFormFields = {
 const signUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-
-  const [isErr, setIsErr] = useState(false);
-  const errMsg = <div>Passwords unmatched!</div>;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -36,10 +34,8 @@ const signUpForm = () => {
       }
 
       try {
-        const res = await createAuthUserWithEmailAndPw(email, password);
-        if (res !== undefined) {
-          await createUserDocFromAuth(res.user, { displayName });
-        }
+        const res = (await createAuthUserWithEmailAndPw(email, password)) as UserCredential;
+        await createUserDocFromAuth(res.user, { displayName });
         resetFormFields();
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
@@ -64,7 +60,6 @@ const signUpForm = () => {
       <h2 className="my-2.5">Don&apos;t have an account?</h2>
       <span>Sign up with your email and password</span>
       <form action="" onSubmit={handleSubmit}>
-        {isErr ? errMsg : null}
         <FormInput
           label="Display Name"
           type="text"
