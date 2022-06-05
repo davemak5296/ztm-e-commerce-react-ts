@@ -36,7 +36,7 @@ export interface btnTypes {
 
 export interface userContextType {
   currUser: User | null;
-  setCurrUser: (currUser: User | null) => User | null | void;
+  setCurrUser: (currUser: userContextType["currUser"]) => void;
 }
 
 export type onAuthNextFnType = (user: User | null) => void;
@@ -49,9 +49,18 @@ export interface productsType {
 
 export interface productsContextType {
   pdt: productsType[];
-  setPdt: (pdt: productsType[]) => productsType[] | void;
+  setPdt: (pdt: productsContextType["pdt"]) => void;
 }
 
 export interface pdtCardType {
   product: productsType;
+}
+
+export interface cartContextType {
+  currCart: {
+    isDropDown: boolean;
+    // other: string;
+  };
+  setCurrCart: (currCart: cartContextType["currCart"]) => void;
+  // setCurrCart: (currCart: cartContextType["currCart"]) => void;
 }
