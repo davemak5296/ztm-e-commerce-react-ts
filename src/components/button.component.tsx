@@ -8,10 +8,10 @@ const btnClass: btnTypes = {
 };
 
 const Button = (props: btnProps) => {
-  const { children, buttonType, ...otherProps } = props;
+  const { varCls, children, buttonType, ...otherProps } = props;
   return (
     <button
-      className={`flex h-[50px] w-auto min-w-[165px] cursor-pointer justify-center px-9 text-xs font-bold uppercase leading-[50px] ${btnClass[buttonType]}`}
+      className={`${varCls} flex h-[50px] w-auto min-w-[165px] cursor-pointer justify-center px-9 text-xs font-bold uppercase leading-[50px] ${btnClass[buttonType]}`}
       {...otherProps}
     >
       {children}

@@ -1,15 +1,24 @@
-import { useContext } from "react";
+import { MouseEventHandler, useContext, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
+
 import { ReactComponent as Crwnlogo } from "../assets/crown.svg";
-import { signOutUser } from "../utils/firebase/firebase.utils";
+import CartIcon from "../components/cart-icon.component";
+import CartDropDown from "../components/cart-dropdown.component";
+
 import { UserContext } from "../contexts/user.context";
+
+import { signOutUser } from "../utils/firebase/firebase.utils";
 import { userContextType } from "../types";
 import "../main.css";
 
 const Navigation = () => {
   const { currUser } = useContext(UserContext) as userContextType;
-  // console.log(currUserObj?.setCurrUser(null));
+  const [isCartClick, setIsCartClick] = useState(false);
 
+  const handleClick: MouseEventHandler<HTMLDivElement> = () => {
+    setIsCartClick(!isCartClick);
+  };
+  // console.log(currUserObj?.setCurrUser(null));
   return (
     <>
       <nav className="mb-6 flex h-[70px] w-full justify-between">
@@ -35,7 +44,11 @@ const Navigation = () => {
               SIGN IN
             </Link>
           )}
+          {/* shopping-cart icon */}
+          <CartIcon clickHandler={handleClick} />
         </div>
+        {/* cart drop-down */}
+        {isCartClick ? <CartDropDown /> : null}
       </nav>
       {/* other components */}
       <Outlet />

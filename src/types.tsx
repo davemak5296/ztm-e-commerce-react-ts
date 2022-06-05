@@ -1,4 +1,4 @@
-import { ChangeEventHandler, ReactNode } from "react";
+import { ChangeEventHandler, MouseEventHandler, ReactNode } from "react";
 import { User } from "firebase/auth";
 export interface category {
   id: number;
@@ -26,6 +26,7 @@ export interface btnProps {
   children: ReactNode;
   type: "button" | "reset" | "submit" | undefined;
   buttonType: string;
+  varCls?: string;
   onClick?: () => void;
 }
 
@@ -49,4 +50,8 @@ export interface productsType {
 export interface productsContextType {
   pdt: productsType[];
   setPdt: (pdt: productsType[]) => productsType[] | void;
+}
+
+export interface pdtCardType {
+  product: productsType;
 }
