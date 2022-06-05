@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState, useEffect } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { productsType, productsContextType } from "../types";
 import PRODUCT from "../shop-data.json";
 

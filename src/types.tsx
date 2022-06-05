@@ -27,7 +27,7 @@ export interface btnProps {
   type: "button" | "reset" | "submit" | undefined;
   buttonType: string;
   varCls?: string;
-  onClick?: () => void;
+  clickHandler?: MouseEventHandler | (() => void);
 }
 
 export interface btnTypes {
@@ -56,9 +56,12 @@ export interface pdtCardType {
   product: productsType;
 }
 
+export type itemInCartType = productsType & { qty: number };
 export interface cartContextType {
   currCart: {
     isDropDown: boolean;
+    itemInCart: itemInCartType[];
+    sumOfItem: number;
     // other: string;
   };
   setCurrCart: (currCart: cartContextType["currCart"]) => void;
