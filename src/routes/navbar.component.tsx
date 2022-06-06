@@ -38,7 +38,7 @@ const Navigation = () => {
         {/* links */}
         <div className="flex h-full w-6/12 items-center justify-end">
           <Link to="/shop" className="py-2.5 px-3.5">
-            Shop
+            SHOP
           </Link>
           <Link to="/shop" className="py-2.5 px-3.5">
             CONTACT

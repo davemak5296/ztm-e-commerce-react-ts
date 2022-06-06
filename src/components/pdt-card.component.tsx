@@ -6,7 +6,7 @@ import { CartContext } from "../contexts/cart.context";
 const PdtCard = ({ product }: { product: productsType }) => {
   const { id, name, imageUrl, price } = product;
   const { currCart, setCurrCart } = useContext(CartContext);
-  const { itemInCart } = currCart;
+  const { isDropDown, itemInCart } = currCart;
   let { sumOfItem } = currCart;
 
   const addHandler: MouseEventHandler<HTMLButtonElement> = () => {
@@ -30,9 +30,9 @@ const PdtCard = ({ product }: { product: productsType }) => {
         price: price,
         qty: 1,
       });
-      setCurrCart({ ...currCart, itemInCart, sumOfItem });
+      setCurrCart({ isDropDown, itemInCart, sumOfItem });
     } else {
-      setCurrCart({ ...currCart, itemInCart, sumOfItem });
+      setCurrCart({ isDropDown, itemInCart, sumOfItem });
     }
   };
 
