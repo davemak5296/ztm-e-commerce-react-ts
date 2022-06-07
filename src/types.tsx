@@ -58,12 +58,10 @@ export interface pdtCardType {
 
 export type itemInCartType = productsType & { qty: number };
 export interface cartContextType {
-  currCart: {
-    isDropDown: boolean;
-    itemInCart: itemInCartType[];
-    sumOfItem: number;
-    // other: string;
-  };
-  setCurrCart: (currCart: cartContextType["currCart"]) => void;
-  // setCurrCart: (currCart: cartContextType["currCart"]) => void;
+  isCartOpen: boolean;
+  setIsCartOpen: (bool: boolean) => void;
+  itemsInCart: itemInCartType[];
+  addItemToCart: (pdt: productsType) => void;
+  sumOfCartItems: number;
+  setSumOfCartItems: (sum: number) => void;
 }

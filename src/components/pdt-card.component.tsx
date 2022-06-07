@@ -4,36 +4,10 @@ import Button from "./button.component";
 import { CartContext } from "../contexts/cart.context";
 
 const PdtCard = ({ product }: { product: productsType }) => {
-  const { id, name, imageUrl, price } = product;
-  const { currCart, setCurrCart } = useContext(CartContext);
-  const { isDropDown, itemInCart } = currCart;
-  let { sumOfItem } = currCart;
-
-  const addHandler: MouseEventHandler<HTMLButtonElement> = () => {
-    let isAdded = false;
-    sumOfItem += 1;
-
-    currCart.itemInCart.some((e, i) => {
-      const { id: addedPdtId } = e;
-      if (id == addedPdtId) {
-        isAdded = true;
-        itemInCart[i]["qty"] += 1;
-        return true;
-      }
-    });
-
-    if (!isAdded) {
-      itemInCart.push({
-        id: id,
-        name: name,
-        imageUrl: imageUrl,
-        price: price,
-        qty: 1,
-      });
-      setCurrCart({ isDropDown, itemInCart, sumOfItem });
-    } else {
-      setCurrCart({ isDropDown, itemInCart, sumOfItem });
-    }
+  const { name, imageUrl, price } = product;
+  const { addItemToCart } = useContext(CartContext);
+  const addPdtToCart: MouseEventHandler<HTMLButtonElement> = () => {
+    addItemToCart(product);
   };
 
   return (
@@ -51,7 +25,7 @@ const PdtCard = ({ product }: { product: productsType }) => {
         varCls="hidden w-[80%] absolute top-[255px] group-hover:flex group-hover:opacity-[.85] "
         type="button"
         buttonType="inverted"
-        clickHandler={addHandler}
+        clickHandler={addPdtToCart}
       >
         {/* <Button cls="absolute bottom-[40px]" type="button" buttonType="inverted"> */}
         Add to cart

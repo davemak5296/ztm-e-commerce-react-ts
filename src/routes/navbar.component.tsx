@@ -9,24 +9,12 @@ import { UserContext } from "../contexts/user.context";
 import { CartContext } from "../contexts/cart.context";
 
 import { signOutUser } from "../utils/firebase/firebase.utils";
-import { userContextType, cartContextType } from "../types";
+import { userContextType } from "../types";
 import "../main.css";
 
 const Navigation = () => {
   const { currUser } = useContext(UserContext) as userContextType;
-  const { currCart } = useContext(CartContext) as cartContextType;
-
-  // const handleToggle: MouseEventHandler<HTMLDivElement> = () => {
-  //   setCurrCart({ isDropDown: !currCart.isDropDown });
-  //   // setCurrCart({ ...currCart, isDropDown: !currCart.isDropDown });
-  // };
-
-  // const a = async () => {
-  //   const b = await currCart;
-  //   console.log(b);
-  // };
-
-  // a();
+  const { isCartOpen } = useContext(CartContext);
 
   return (
     <>
@@ -56,7 +44,7 @@ const Navigation = () => {
           <CartIcon />
         </div>
         {/* cart drop-down */}
-        {currCart.isDropDown ? <CartDropDown /> : null}
+        {isCartOpen ? <CartDropDown /> : null}
       </nav>
       {/* other components */}
       <Outlet />
