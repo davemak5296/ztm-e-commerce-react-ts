@@ -14,11 +14,11 @@ import "../main.css";
 
 const Navigation = () => {
   const { currUser } = useContext(UserContext) as userContextType;
-  const { isCartOpen } = useContext(CartContext);
+  const { isCartOpen, closeCart } = useContext(CartContext);
 
   return (
     <>
-      <nav className="mb-6 flex h-[70px] w-full justify-between">
+      <nav onClick={closeCart} className="mb-6 flex h-[70px] w-full justify-between">
         {/* logo */}
         <Link to="/" className="h-full w-[70px] p-6">
           <Crwnlogo className="" />

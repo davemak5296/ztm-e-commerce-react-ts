@@ -34,6 +34,9 @@ export interface btnTypes {
   [key: string]: string;
 }
 
+export interface cartItemType {
+  item: itemInCartType;
+}
 export interface userContextType {
   currUser: User | null;
   setCurrUser: (currUser: userContextType["currUser"]) => void;
@@ -60,6 +63,7 @@ export type itemInCartType = productsType & { qty: number };
 export interface cartContextType {
   isCartOpen: boolean;
   setIsCartOpen: (bool: boolean) => void;
+  closeCart: MouseEventHandler;
   itemsInCart: itemInCartType[];
   addItemToCart: (pdt: productsType) => void;
   sumOfCartItems: number;

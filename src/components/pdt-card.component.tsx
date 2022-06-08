@@ -5,13 +5,21 @@ import { CartContext } from "../contexts/cart.context";
 
 const PdtCard = ({ product }: { product: productsType }) => {
   const { name, imageUrl, price } = product;
-  const { addItemToCart } = useContext(CartContext);
-  const addPdtToCart: MouseEventHandler<HTMLButtonElement> = () => {
+  const { addItemToCart, setIsCartOpen, closeCart } = useContext(CartContext);
+
+  const addPdtToCart: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
     addItemToCart(product);
+    setIsCartOpen(true);
   };
 
+  // const closeCart: MouseEventHandler = (e) => {
+  //   e.stopPropagation();
+  //   setIsCartOpen(false);
+  // };
+
   return (
-    <div className="group relative flex h-[350px] flex-col items-center">
+    <div onClick={closeCart} className="group relative flex h-[350px] flex-col items-center">
       <img
         className="mb-1 h-[95%] w-full object-cover group-hover:opacity-80"
         src={imageUrl}

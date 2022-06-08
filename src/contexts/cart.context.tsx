@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, MouseEventHandler } from "react";
 import { cartContextType, itemInCartType, productsType } from "../types";
 
 const addCartItem = (
@@ -7,14 +7,12 @@ const addCartItem = (
   sum: number,
   setSum: (newSum: number) => void
 ) => {
-  const { id, name, imageUrl, price } = pdtToAdd;
   let isAdded = false;
 
   setSum(sum + 1);
 
-  cartitems.some((e, i) => {
-    const { id: addedPdtId } = e;
-    if (id == addedPdtId) {
+  cartitems.some((itemInCart, i) => {
+    if (pdtToAdd.id == itemInCart.id) {
       isAdded = true;
       cartitems[i]["qty"] += 1;
       return true;
@@ -22,18 +20,11 @@ const addCartItem = (
   });
 
   if (!isAdded) {
-    cartitems.push({
-      id: id,
-      name: name,
-      imageUrl: imageUrl,
-      price: price,
-      qty: 1,
-    });
-
-    return cartitems;
-  } else {
+    cartitems.push({ ...pdtToAdd, qty: 1 });
     return cartitems;
   }
+
+  return cartitems;
 };
 export const CartContext = createContext<cartContextType | Record<string, never>>({});
 
@@ -46,9 +37,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setItemsInCart(addCartItem(itemsInCart, pdtToAdd, sumOfCartItems, setSumOfCartItems));
   };
 
+  const closeCart: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    setIsCartOpen(false);
+  };
+
   const value = {
     isCartOpen,
     setIsCartOpen,
+    closeCart,
     itemsInCart,
     addItemToCart,
     sumOfCartItems,

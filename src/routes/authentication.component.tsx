@@ -1,16 +1,19 @@
 import { signInWithGooglePopup, createUserDocFromAuth } from "../utils/firebase/firebase.utils";
 import "../main.css";
+import { CartContext } from "../contexts/cart.context";
 import SignUpForm from "../components/sign-up-form.component";
 import SignInForm from "../components/sign-in-form.component";
+import { useContext } from "react";
 
 const authentication = () => {
+  const { closeCart } = useContext(CartContext);
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
     const userDocRef = await createUserDocFromAuth(user);
   };
 
   return (
-    <main className="mx-auto my-8 flex w-[850px] justify-between">
+    <main onClick={closeCart} className="mx-auto my-8 flex w-[850px] justify-between">
       <SignInForm />
       <SignUpForm />
     </main>

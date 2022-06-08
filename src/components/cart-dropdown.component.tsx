@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import Button from "./button.component";
 import { CartContext } from "../contexts/cart.context";
 
@@ -21,7 +22,7 @@ const CartDropDown = () => {
       </div>
 
       <Button varCls="w-full mt-auto" type="button" buttonType="default">
-        GO TO CHECKOUT
+        <Link to="cart">GO TO CHECKOUT</Link>
       </Button>
     </div>
   );
