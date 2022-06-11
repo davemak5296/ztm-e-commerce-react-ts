@@ -1,7 +1,7 @@
 import { MouseEventHandler, useContext } from "react";
+import { CartContext } from "../contexts/cart.context";
 import { productsType } from "../types";
 import Button from "./button.component";
-import { CartContext } from "../contexts/cart.context";
 
 const PdtCard = ({ product }: { product: productsType }) => {
   const { name, imageUrl, price } = product;
@@ -12,11 +12,6 @@ const PdtCard = ({ product }: { product: productsType }) => {
     addItemToCart(product);
     setIsCartOpen(true);
   };
-
-  // const closeCart: MouseEventHandler = (e) => {
-  //   e.stopPropagation();
-  //   setIsCartOpen(false);
-  // };
 
   return (
     <div onClick={closeCart} className="group relative flex h-[350px] flex-col items-center">
@@ -35,7 +30,6 @@ const PdtCard = ({ product }: { product: productsType }) => {
         buttonType="inverted"
         clickHandler={addPdtToCart}
       >
-        {/* <Button cls="absolute bottom-[40px]" type="button" buttonType="inverted"> */}
         Add to cart
       </Button>
     </div>

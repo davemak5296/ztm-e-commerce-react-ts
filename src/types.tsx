@@ -66,6 +66,10 @@ export interface cartContextType {
   closeCart: MouseEventHandler;
   itemsInCart: itemInCartType[];
   addItemToCart: (pdt: productsType) => void;
+  addQty: (item: itemInCartType) => void;
+  deductQty: (item: itemInCartType) => void;
+  removeItemInCart: (item: itemInCartType) => void;
   sumOfCartItems: number;
   setSumOfCartItems: (sum: number) => void;
+  getTotal: (cartitems: itemInCartType[]) => number;
 }

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import Button from "./button.component";
 import { CartContext } from "../contexts/cart.context";
+import Button from "./button.component";
 
 const CartDropDown = () => {
   const { itemsInCart } = useContext(CartContext);
