@@ -71,5 +71,5 @@ export interface cartContextType {
   removeItemInCart: (item: itemInCartType) => void;
   sumOfCartItems: number;
   setSumOfCartItems: (sum: number) => void;
-  getTotal: (cartitems: itemInCartType[]) => number;
+  cartTotal: number;
 }

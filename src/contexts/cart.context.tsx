@@ -1,81 +1,37 @@
-import { createContext, MouseEventHandler, ReactNode, useState } from "react";
+import { createContext, MouseEventHandler, ReactNode, useEffect, useState } from "react";
 import { cartContextType, itemInCartType, productsType } from "../types";
 
-const addCartItem = (
-  cartitems: itemInCartType[],
-  pdtToAdd: productsType,
-  sum: number,
-  setSum: (newSum: number) => void
-) => {
-  let isAdded = false;
+const addCartItem = (cartItems: itemInCartType[], pdtToAdd: productsType) => {
+  const existingCartItem = cartItems.find((cartItem) => cartItem.id === pdtToAdd.id);
 
-  setSum(sum + 1);
-
-  cartitems.some((itemInCart, i) => {
-    if (pdtToAdd.id == itemInCart.id) {
-      isAdded = true;
-      cartitems[i]["qty"] += 1;
-      return true;
-    }
-  });
-
-  if (!isAdded) {
-    cartitems.push({ ...pdtToAdd, qty: 1 });
-    return cartitems;
+  if (existingCartItem) {
+    return cartItems.map((cartItem) =>
+      cartItem.id === pdtToAdd.id ? { ...cartItem, qty: cartItem.qty + 1 } : cartItem
+    );
   }
-
-  return cartitems;
+  return [...cartItems, { ...pdtToAdd, qty: 1 }];
 };
 
-const chgQty = (
-  cartItems: itemInCartType[],
-  tgtItem: itemInCartType,
-  ops: "add" | "deduct",
-  sum: number,
-  setSum: (newSum: number) => void
-) => {
+const changeQty = (cartItems: itemInCartType[], tgtItem: itemInCartType, ops: "add" | "deduct") => {
   if (ops == "add") {
-    setSum(sum + 1);
-    cartItems.some((itemInCart, i) => {
-      if (tgtItem.id == itemInCart.id) {
-        cartItems[i]["qty"] += 1;
-        return true;
-      }
-    });
+    return cartItems.map((cartItem) =>
+      cartItem.id === tgtItem.id ? { ...cartItem, qty: cartItem.qty + 1 } : cartItem
+    );
   } else {
-    setSum(sum - 1);
-    cartItems.some((itemInCart, i) => {
-      if (tgtItem.id == itemInCart.id) {
-        if (cartItems[i]["qty"] > 1) {
-          cartItems[i]["qty"] -= 1;
-          return true;
-        } else if (cartItems[i]["qty"] == 1) {
-          cartItems.splice(i, 1);
-          return true;
-        }
-      }
-    });
-  }
+    const existingCartItem = cartItems.find((cartItem) => cartItem.id === tgtItem.id);
 
-  return cartItems;
-};
-
-const removeItem = (
-  cartItems: itemInCartType[],
-  tgtItem: itemInCartType,
-  sum: number,
-  setSum: (newSum: number) => void
-) => {
-  cartItems.some((itemInCart, i) => {
-    if (tgtItem.id == itemInCart.id) {
-      setSum(sum - itemInCart.qty);
-      cartItems.splice(i, 1);
-      return true;
+    if (existingCartItem?.qty === 1) {
+      return cartItems.filter((cartItem) => cartItem.id !== tgtItem.id);
     }
-  });
 
-  return cartItems;
+    return cartItems.map((cartItem) =>
+      cartItem.id === tgtItem.id ? { ...cartItem, qty: cartItem.qty - 1 } : cartItem
+    );
+  }
 };
+
+const removeItem = (cartItems: itemInCartType[], tgtItem: itemInCartType) =>
+  cartItems.filter((cartItem) => cartItem.id !== tgtItem.id);
 
 export const CartContext = createContext<cartContextType | Record<string, never>>({});
 
@@ -83,6 +39,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [itemsInCart, setItemsInCart] = useState<itemInCartType[]>([] as itemInCartType[]);
   const [sumOfCartItems, setSumOfCartItems] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
 
   // close cart drop down
   const closeCart: MouseEventHandler = (e) => {
@@ -92,31 +49,41 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   // add new item to cart
   const addItemToCart = (pdt: productsType) => {
-    setItemsInCart(addCartItem(itemsInCart, pdt, sumOfCartItems, setSumOfCartItems));
+    setItemsInCart(addCartItem(itemsInCart, pdt));
   };
 
   // add quantity to item in cart
   const addQty = (item: itemInCartType) => {
-    setItemsInCart(chgQty(itemsInCart, item, "add", sumOfCartItems, setSumOfCartItems));
+    setItemsInCart(changeQty(itemsInCart, item, "add"));
   };
 
   // deduct quantity to item in cart
   const deductQty = (item: itemInCartType) => {
-    setItemsInCart(chgQty(itemsInCart, item, "deduct", sumOfCartItems, setSumOfCartItems));
+    setItemsInCart(changeQty(itemsInCart, item, "deduct"));
   };
 
   const removeItemInCart = (item: itemInCartType) => {
-    setItemsInCart(removeItem(itemsInCart, item, sumOfCartItems, setSumOfCartItems));
+    setItemsInCart(removeItem(itemsInCart, item));
   };
 
   // calculate and return total value of items in cart
   const getTotal = (cartItems: itemInCartType[]) => {
-    let total = 0;
-    cartItems.forEach((e) => {
-      total += e.qty * e.price;
-    });
+    const total = cartItems.reduce((tt, cartItem) => tt + cartItem.qty * cartItem.price, 0);
     return total;
   };
+
+  useEffect(() => {
+    const newCartCount = itemsInCart.reduce((total, cartItem) => total + cartItem.qty, 0);
+    setSumOfCartItems(newCartCount);
+  }, [itemsInCart]);
+
+  useEffect(() => {
+    const newCartTotal = itemsInCart.reduce(
+      (total, cartItem) => total + cartItem.qty * cartItem.price,
+      0
+    );
+    setCartTotal(newCartTotal);
+  }, [itemsInCart]);
 
   const value = {
     isCartOpen,
@@ -129,7 +96,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     removeItemInCart,
     sumOfCartItems,
     setSumOfCartItems,
-    getTotal,
+    cartTotal,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

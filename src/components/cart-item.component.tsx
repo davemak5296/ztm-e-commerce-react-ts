@@ -27,6 +27,7 @@ const CartItem = (props: cartItemType) => {
     e.stopPropagation();
     removeItemInCart(item);
   };
+
   return (
     <section className="flex w-full border-b border-solid border-zinc-400 py-5">
       <div className="w-[24%] pr-4">

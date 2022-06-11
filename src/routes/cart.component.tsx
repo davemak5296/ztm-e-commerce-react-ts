@@ -5,7 +5,7 @@ import CartItem from "../components/cart-item.component";
 const titles = ["Product", "Description", "Quantity", "Price", "Sub-total", "Remove"];
 
 const Cart = () => {
-  const { itemsInCart, getTotal } = useContext(CartContext);
+  const { itemsInCart, cartTotal } = useContext(CartContext);
 
   return (
     <main className="mx-auto mt-12 flex w-[800px] flex-col items-center">
@@ -20,7 +20,7 @@ const Cart = () => {
       {itemsInCart.map((e) => (
         <CartItem key={e.id} item={e} />
       ))}
-      <div className="ml-auto mt-8 text-4xl">{`TOTAL: ${getTotal(itemsInCart)}`}</div>
+      <div className="ml-auto mt-8 text-4xl">{`TOTAL: ${cartTotal}`}</div>
     </main>
   );
 };
