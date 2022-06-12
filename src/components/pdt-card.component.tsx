@@ -14,7 +14,10 @@ const PdtCard = ({ product }: { product: productsType }) => {
   };
 
   return (
-    <div onClick={closeCart} className="group relative flex h-[350px] flex-col items-center">
+    <div
+      onClick={closeCart}
+      className="group relative flex h-[350px] w-[22vw] flex-col items-center"
+    >
       <img
         className="mb-1 h-[95%] w-full object-cover group-hover:opacity-80"
         src={imageUrl}

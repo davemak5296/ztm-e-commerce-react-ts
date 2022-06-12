@@ -1,5 +1,7 @@
 import { ChangeEventHandler, MouseEventHandler, ReactNode } from "react";
 import { User } from "firebase/auth";
+
+export type emptyObj = Record<string, never>;
 export interface category {
   id: number;
   title: string;
@@ -50,9 +52,10 @@ export interface productsType {
   price: number;
 }
 
-export interface productsContextType {
-  pdt: productsType[];
-  setPdt: (pdt: productsContextType["pdt"]) => void;
+export type catsMapType = Record<string, productsType[]>;
+export interface catContextType {
+  categoriesMap: catsMapType;
+  setCategoriesMap: (pdt: catContextType["categoriesMap"]) => void;
 }
 
 export interface pdtCardType {
@@ -73,3 +76,17 @@ export interface cartContextType {
   setSumOfCartItems: (sum: number) => void;
   cartTotal: number;
 }
+
+export interface catalogType {
+  title: string;
+  items: productsType[];
+}
+
+export interface catPreviewPropType {
+  cat: string;
+  products: productsType[];
+}
+
+export type useParamsType = {
+  category: string;
+};

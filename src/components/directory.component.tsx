@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CartContext } from "../contexts/cart.context";
 import { directoryProps } from "../types";
-import CategoryItem from "./cat-item.component";
+import DirectoryItem from "./directory-item";
 
 const Directory = (props: directoryProps) => {
   const categories = props.categories;
@@ -10,7 +10,7 @@ const Directory = (props: directoryProps) => {
   return (
     <main onClick={closeCart} className="flex w-full flex-wrap justify-between">
       {categories.map((cat) => (
-        <CategoryItem key={cat.id} category={cat} />
+        <DirectoryItem key={cat.id} category={cat} />
       ))}
     </main>
   );

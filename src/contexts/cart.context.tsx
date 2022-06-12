@@ -1,6 +1,7 @@
 import { createContext, MouseEventHandler, ReactNode, useEffect, useState } from "react";
-import { cartContextType, itemInCartType, productsType } from "../types";
+import { cartContextType, emptyObj, itemInCartType, productsType } from "../types";
 
+// helper function to "addItemToCart"
 const addCartItem = (cartItems: itemInCartType[], pdtToAdd: productsType) => {
   const existingCartItem = cartItems.find((cartItem) => cartItem.id === pdtToAdd.id);
 
@@ -12,6 +13,7 @@ const addCartItem = (cartItems: itemInCartType[], pdtToAdd: productsType) => {
   return [...cartItems, { ...pdtToAdd, qty: 1 }];
 };
 
+// helper functoin to "addQty" and "deductQty"
 const changeQty = (cartItems: itemInCartType[], tgtItem: itemInCartType, ops: "add" | "deduct") => {
   if (ops == "add") {
     return cartItems.map((cartItem) =>
@@ -30,10 +32,11 @@ const changeQty = (cartItems: itemInCartType[], tgtItem: itemInCartType, ops: "a
   }
 };
 
+// helper function to "removeItemInCart"
 const removeItem = (cartItems: itemInCartType[], tgtItem: itemInCartType) =>
   cartItems.filter((cartItem) => cartItem.id !== tgtItem.id);
 
-export const CartContext = createContext<cartContextType | Record<string, never>>({});
+export const CartContext = createContext<cartContextType | emptyObj>({});
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -62,21 +65,18 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setItemsInCart(changeQty(itemsInCart, item, "deduct"));
   };
 
+  // remove item in cart
   const removeItemInCart = (item: itemInCartType) => {
     setItemsInCart(removeItem(itemsInCart, item));
   };
 
-  // calculate and return total value of items in cart
-  const getTotal = (cartItems: itemInCartType[]) => {
-    const total = cartItems.reduce((tt, cartItem) => tt + cartItem.qty * cartItem.price, 0);
-    return total;
-  };
-
+  // when items in cart change, re-calcuate sum of items in cart
   useEffect(() => {
     const newCartCount = itemsInCart.reduce((total, cartItem) => total + cartItem.qty, 0);
     setSumOfCartItems(newCartCount);
   }, [itemsInCart]);
 
+  // when items in cart change, re-cauculate total value of items in cart
   useEffect(() => {
     const newCartTotal = itemsInCart.reduce(
       (total, cartItem) => total + cartItem.qty * cartItem.price,
