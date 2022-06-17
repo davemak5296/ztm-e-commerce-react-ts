@@ -1,16 +1,18 @@
 import { btnProps, btnTypes } from '../../types';
 import styles from './button.styles';
 
-const btnClass: btnTypes = {
+const btnStyle: btnTypes = {
   default: styles.vanilla,
   google: styles.google,
   inverted: styles.inverted,
+  defaultInDropDown: styles.default_DropDown,
+  invertedInProductCard: styles.inverted_ProductCard,
 };
 
 const Button = (props: btnProps) => {
-  const { clickHandler, varCls, children, buttonType, ...otherProps } = props;
+  const { clickHandler, children, buttonType, ...otherProps } = props;
   return (
-    <button onClick={clickHandler} className={`${varCls} ${btnClass[buttonType]}`} {...otherProps}>
+    <button onClick={clickHandler} className={btnStyle[buttonType]} {...otherProps}>
       {children}
     </button>
   );

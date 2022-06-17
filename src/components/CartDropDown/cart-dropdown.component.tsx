@@ -1,6 +1,7 @@
 import { MouseEventHandler, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../contexts/cart.context';
+import { btnTypes } from '../../types';
 import Button from '../Button/button.component';
 
 import styles from './cart-dropdown.styles';
@@ -28,7 +29,7 @@ const CartDropDown = () => {
         ))}
       </div>
 
-      <Button clickHandler={navHandler} varCls="w-full mt-auto" type="button" buttonType="default">
+      <Button clickHandler={navHandler} type="button" buttonType="defaultInDropDown">
         GO TO CHECKOUT
       </Button>
       {/* <Link to="cart">GO TO CHECKOUT</Link> */}

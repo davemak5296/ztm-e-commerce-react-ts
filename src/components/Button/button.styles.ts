@@ -30,4 +30,12 @@ const inverted = clsx(
   ['hover:bg-black', 'hover:text-white', 'hover:border-0']
 );
 
-export default { vanilla, google, inverted };
+const default_DropDown = clsx('w-full', 'mt-auto', vanilla);
+
+const inverted_ProductCard = clsx('hidden', ['absolute', 'top-[255px]'], 'w-[80%]', [
+  'group-hover:flex',
+  'group:hover:opacity-[.85]',
+  inverted,
+]);
+
+export default { vanilla, google, inverted, default_DropDown, inverted_ProductCard };

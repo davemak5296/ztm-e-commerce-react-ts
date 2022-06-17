@@ -1,5 +1,5 @@
-import { ChangeEventHandler, MouseEventHandler, ReactNode } from "react";
-import { User } from "firebase/auth";
+import { ChangeEventHandler, MouseEventHandler, ReactNode } from 'react';
+import { User } from 'firebase/auth';
 
 export type emptyObj = Record<string, never>;
 export interface category {
@@ -26,14 +26,17 @@ export interface formInputProps {
 
 export interface btnProps {
   children: ReactNode;
-  type: "button" | "reset" | "submit" | undefined;
-  buttonType: string;
-  varCls?: string;
+  type: 'button' | 'reset' | 'submit' | undefined;
+  buttonType: keyof btnTypes;
   clickHandler?: MouseEventHandler | (() => void);
 }
 
 export interface btnTypes {
-  [key: string]: string;
+  default: string;
+  google: string;
+  inverted: string;
+  defaultInDropDown: string;
+  invertedInProductCard: string;
 }
 
 export interface cartItemType {
@@ -41,7 +44,7 @@ export interface cartItemType {
 }
 export interface userContextType {
   currUser: User | null;
-  setCurrUser: (currUser: userContextType["currUser"]) => void;
+  setCurrUser: (currUser: userContextType['currUser']) => void;
 }
 
 export type onAuthNextFnType = (user: User | null) => void;
@@ -55,7 +58,7 @@ export interface productsType {
 export type catsMapType = Record<string, productsType[]>;
 export interface catContextType {
   categoriesMap: catsMapType;
-  setCategoriesMap: (pdt: catContextType["categoriesMap"]) => void;
+  setCategoriesMap: (pdt: catContextType['categoriesMap']) => void;
 }
 
 export interface pdtCardType {

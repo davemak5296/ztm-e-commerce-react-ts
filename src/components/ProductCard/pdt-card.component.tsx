@@ -28,9 +28,9 @@ const PdtCard = ({ product }: { product: productsType }) => {
         <span className="w-[10%]">{price}</span>
       </div>
       <Button
-        varCls="hidden w-[80%] absolute top-[255px] group-hover:flex group-hover:opacity-[.85] "
+        // varCls="hidden w-[80%] absolute top-[255px] group-hover:flex group-hover:opacity-[.85] "
         type="button"
-        buttonType="inverted"
+        buttonType="invertedInProductCard"
         clickHandler={addPdtToCart}
       >
         Add to cart
