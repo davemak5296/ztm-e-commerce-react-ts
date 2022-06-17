@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useState, useEffect } from "react";
-import { getCategoriesAndDocs } from "../utils/firebase/firebase.utils";
-import { catContextType, catsMapType, emptyObj } from "../types";
+import { createContext, ReactNode, useState, useEffect } from 'react';
+import { getCategoriesAndDocs } from '../utils/firebase/firebase.utils';
+import { catContextType, catsMapType, emptyObj } from '../types';
 // import PRODUCT from "../shop-data.json";
 // import SHOP_DATA from "../shop-data";
 

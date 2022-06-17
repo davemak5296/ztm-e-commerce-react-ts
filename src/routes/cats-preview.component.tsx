@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import CatPreview from "../components/cat-preview.component";
+import CatPreview from "../components/CategoryPreview/cat-preview.component";
 import { CategoriesContext } from "../contexts/categories.context";
 import "../main.css";
 

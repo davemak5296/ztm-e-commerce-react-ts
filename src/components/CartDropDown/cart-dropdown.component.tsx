@@ -1,19 +1,21 @@
-import { MouseEventHandler, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { CartContext } from "../contexts/cart.context";
-import Button from "./button.component";
+import { MouseEventHandler, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../../contexts/cart.context';
+import Button from '../Button/button.component';
+
+import styles from './cart-dropdown.styles';
 
 const CartDropDown = () => {
   const { itemsInCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const navHandler: MouseEventHandler = () => {
-    navigate("/cart");
+    navigate('/cart');
   };
 
   return (
-    <div className="absolute top-[90px] right-[40px] z-[1] flex h-[340px] w-60 flex-col border border-solid border-black bg-white p-5">
-      <div className="flex h-[240px] flex-col overflow-y-scroll bg-white">
+    <div className={styles.wrapperDiv}>
+      <div className={styles.div}>
         {/* items */}
         {itemsInCart.map(({ id, name, imageUrl, price, qty }) => (
           <section key={id} className="mb-3.5 flex">

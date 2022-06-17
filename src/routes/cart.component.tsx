@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../contexts/cart.context";
-import CartItem from "../components/cart-item.component";
+import CartItem from "../components/CartItem/cart-item.component";
 
 const titles = ["Product", "Description", "Quantity", "Price", "Sub-total", "Remove"];
 

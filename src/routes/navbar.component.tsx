@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 import { ReactComponent as Crwnlogo } from "../assets/crown.svg";
-import CartIcon from "../components/cart-icon.component";
-import CartDropDown from "../components/cart-dropdown.component";
+import CartIcon from "../components/CartIcon/cart-icon.component";
+import CartDropDown from "../components/CartDropDown/cart-dropdown.component";
 
 import { UserContext } from "../contexts/user.context";
 import { CartContext } from "../contexts/cart.context";

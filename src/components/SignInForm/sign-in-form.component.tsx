@@ -1,17 +1,17 @@
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
-import { FirebaseError } from "firebase/app";
-import { UserCredential } from "firebase/auth";
+import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import { FirebaseError } from 'firebase/app';
+import { UserCredential } from 'firebase/auth';
 import {
   signInAuthUserWithEmailAndPw,
   createUserDocFromAuth,
   signInWithGooglePopup,
-} from "../utils/firebase/firebase.utils";
-import FormInput from "./form-input.component";
-import Button from "./button.component";
+} from '../../utils/firebase/firebase.utils';
+import FormInput from '../FormInput/form-input.component';
+import Button from '../Button/button.component';
 
 const defaultFormFields = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 
 const signInForm = () => {
@@ -40,11 +40,11 @@ const signInForm = () => {
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
           switch (error.code) {
-            case "auth/wrong-password":
-              alert("Wrong password.");
+            case 'auth/wrong-password':
+              alert('Wrong password.');
               break;
-            case "auth/user-not-found":
-              alert("User not exists.");
+            case 'auth/user-not-found':
+              alert('User not exists.');
               break;
             default:
               console.log(error.code);

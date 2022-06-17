@@ -1,18 +1,18 @@
-import { FirebaseError } from "firebase/app";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { FirebaseError } from 'firebase/app';
+import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import {
   createAuthUserWithEmailAndPw,
   createUserDocFromAuth,
-} from "../utils/firebase/firebase.utils";
-import FormInput from "./form-input.component";
-import Button from "./button.component";
-import { UserCredential } from "firebase/auth";
+} from '../../utils/firebase/firebase.utils';
+import FormInput from '../FormInput/form-input.component';
+import Button from '../Button/button.component';
+import { UserCredential } from 'firebase/auth';
 
 const defaultFormFields = {
-  displayName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  displayName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 const signUpForm = () => {
@@ -28,7 +28,7 @@ const signUpForm = () => {
       event.preventDefault();
 
       if (password !== confirmPassword) {
-        alert("Passwords unmatch!");
+        alert('Passwords unmatch!');
         resetFormFields();
         return;
       }
@@ -40,8 +40,8 @@ const signUpForm = () => {
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
           console.log(error.code);
-          if (error.code === "auth/email-already-in-use") {
-            alert("Cannot sign up, email already in use.");
+          if (error.code === 'auth/email-already-in-use') {
+            alert('Cannot sign up, email already in use.');
           }
         }
       }

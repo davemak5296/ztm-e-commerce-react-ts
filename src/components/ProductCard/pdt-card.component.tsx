@@ -1,7 +1,7 @@
-import { MouseEventHandler, useContext } from "react";
-import { CartContext } from "../contexts/cart.context";
-import { productsType } from "../types";
-import Button from "./button.component";
+import { MouseEventHandler, useContext } from 'react';
+import { CartContext } from '../../contexts/cart.context';
+import { productsType } from '../../types';
+import Button from '../Button/button.component';
 
 const PdtCard = ({ product }: { product: productsType }) => {
   const { name, imageUrl, price } = product;

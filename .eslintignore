@@ -8,3 +8,4 @@ tailwind.config.js
 .prettierignore
 .gitignore
 vite.config.ts
+prettier.config.js

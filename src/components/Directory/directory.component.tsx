@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { CartContext } from "../contexts/cart.context";
-import { directoryProps } from "../types";
-import DirectoryItem from "./directory-item";
+import { useContext } from 'react';
+import { CartContext } from '../../contexts/cart.context';
+import { directoryProps } from '../../types';
+import DirectoryItem from '../DirectoryItem/directory-item.component';
 
 const Directory = (props: directoryProps) => {
   const categories = props.categories;

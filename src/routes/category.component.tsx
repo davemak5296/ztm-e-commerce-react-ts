@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CategoriesContext } from "../contexts/categories.context";
 import { productsType, useParamsType } from "../types";
-import PdtCard from "../components/pdt-card.component";
+import PdtCard from "../components/ProductCard/pdt-card.component";
 
 const Category = () => {
   const { categoriesMap } = useContext(CategoriesContext);

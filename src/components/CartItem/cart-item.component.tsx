@@ -1,11 +1,11 @@
-import { MouseEventHandler, useContext } from "react";
+import { MouseEventHandler, useContext } from 'react';
 
-import { ReactComponent as MinusSign } from "../assets/circle-minus-solid.svg";
-import { ReactComponent as PlusSign } from "../assets/circle-plus-solid.svg";
-import { ReactComponent as CrossSign } from "../assets/circle-xmark-solid.svg";
+import { ReactComponent as MinusSign } from '../../assets/circle-minus-solid.svg';
+import { ReactComponent as PlusSign } from '../../assets/circle-plus-solid.svg';
+import { ReactComponent as CrossSign } from '../../assets/circle-xmark-solid.svg';
 
-import { CartContext } from "../contexts/cart.context";
-import { cartItemType } from "../types";
+import { CartContext } from '../../contexts/cart.context';
+import { cartItemType } from '../../types';
 
 const CartItem = (props: cartItemType) => {
   const { item } = props;
