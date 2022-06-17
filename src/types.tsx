@@ -1,5 +1,7 @@
-import { ChangeEventHandler, MouseEventHandler, ReactNode } from "react";
-import { User } from "firebase/auth";
+import { ChangeEventHandler, MouseEventHandler, ReactNode } from 'react';
+import { User } from 'firebase/auth';
+
+export type emptyObj = Record<string, never>;
 export interface category {
   id: number;
   title: string;
@@ -24,19 +26,25 @@ export interface formInputProps {
 
 export interface btnProps {
   children: ReactNode;
-  type: "button" | "reset" | "submit" | undefined;
-  buttonType: string;
-  varCls?: string;
-  onClick?: () => void;
+  type: 'button' | 'reset' | 'submit' | undefined;
+  buttonType: keyof btnTypes;
+  clickHandler?: MouseEventHandler | (() => void);
 }
 
 export interface btnTypes {
-  [key: string]: string;
+  default: string;
+  google: string;
+  inverted: string;
+  defaultInDropDown: string;
+  invertedInProductCard: string;
 }
 
+export interface cartItemType {
+  item: itemInCartType;
+}
 export interface userContextType {
   currUser: User | null;
-  setCurrUser: (currUser: User | null) => User | null | void;
+  setCurrUser: (currUser: userContextType['currUser']) => void;
 }
 
 export type onAuthNextFnType = (user: User | null) => void;
@@ -47,11 +55,41 @@ export interface productsType {
   price: number;
 }
 
-export interface productsContextType {
-  pdt: productsType[];
-  setPdt: (pdt: productsType[]) => productsType[] | void;
+export type catsMapType = Record<string, productsType[]>;
+export interface catContextType {
+  categoriesMap: catsMapType;
+  setCategoriesMap: (pdt: catContextType['categoriesMap']) => void;
 }
 
 export interface pdtCardType {
   product: productsType;
 }
+
+export type itemInCartType = productsType & { qty: number };
+export interface cartContextType {
+  isCartOpen: boolean;
+  setIsCartOpen: (bool: boolean) => void;
+  closeCart: MouseEventHandler;
+  itemsInCart: itemInCartType[];
+  addItemToCart: (pdt: productsType) => void;
+  addQty: (item: itemInCartType) => void;
+  deductQty: (item: itemInCartType) => void;
+  removeItemInCart: (item: itemInCartType) => void;
+  sumOfCartItems: number;
+  setSumOfCartItems: (sum: number) => void;
+  cartTotal: number;
+}
+
+export interface catalogType {
+  title: string;
+  items: productsType[];
+}
+
+export interface catPreviewPropType {
+  cat: string;
+  products: productsType[];
+}
+
+export type useParamsType = {
+  category: string;
+};

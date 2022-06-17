@@ -11,8 +11,19 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { onAuthNextFnType } from "../../types";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+  DocumentData,
+  CollectionReference,
+} from "firebase/firestore";
+import { catalogType, onAuthNextFnType, productsType } from "../../types";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -39,6 +50,40 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 
 export const db = getFirestore();
 
+const createCollection = <T = DocumentData>(collectionName: string) => {
+  return collection(db, collectionName) as CollectionReference<T>;
+};
+
+export const addCollectionAndDocs = async (collectionKey: string, objectsToAdd: catalogType[]) => {
+  const collectionRef = createCollection<catalogType>(collectionKey);
+
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((obj) => {
+    const docRef = doc(collectionRef, obj.title.toLowerCase());
+    batch.set(docRef, obj);
+  });
+
+  await batch.commit();
+  console.log("done");
+};
+
+export const getCategoriesAndDocs = async () => {
+  const categoriesRef = createCollection<catalogType>("categories");
+  const q = query(categoriesRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce<Record<string, productsType[]>>(
+    (acc, docSnapShot) => {
+      const { title, items } = docSnapShot.data();
+      acc[title.toLowerCase()] = items;
+      return acc;
+    },
+    {}
+  );
+
+  return categoryMap;
+};
 export const createUserDocFromAuth = async (
   userAuth: UserCredential["user"],
   additionalInfo: object = {}
