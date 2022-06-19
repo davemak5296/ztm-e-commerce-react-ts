@@ -76,7 +76,7 @@ export interface cartContextType {
   deductQty: (item: itemInCartType) => void;
   removeItemInCart: (item: itemInCartType) => void;
   sumOfCartItems: number;
-  setSumOfCartItems: (sum: number) => void;
+  // setSumOfCartItems: (sum: number) => void;
   cartTotal: number;
 }
 
@@ -93,3 +93,25 @@ export interface catPreviewPropType {
 export type useParamsType = {
   category: string;
 };
+
+export interface cartStates {
+  isCartOpen: boolean;
+  itemsInCart: itemInCartType[];
+  sumOfCartItems: number;
+  cartTotal: number;
+}
+
+export enum cartActionKind {
+  SET_CART_ITEMS = 'SET_CART_ITEMS',
+  SET_IS_CART_OPEN = 'SET_IS_CART_OPEN',
+}
+export interface cartAction {
+  type: cartActionKind;
+  payload: payloadType | boolean;
+}
+
+export interface payloadType {
+  newCartItems: itemInCartType[];
+  newCartCount: number;
+  newCartTotal: number;
+}

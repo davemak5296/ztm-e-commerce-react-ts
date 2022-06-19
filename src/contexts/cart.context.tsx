@@ -1,5 +1,49 @@
-import { createContext, MouseEventHandler, ReactNode, useEffect, useState } from "react";
-import { cartContextType, emptyObj, itemInCartType, productsType } from "../types";
+import { createContext, MouseEventHandler, ReactNode, useReducer } from 'react';
+import {
+  cartContextType,
+  emptyObj,
+  itemInCartType,
+  productsType,
+  cartStates,
+  cartAction,
+  cartActionKind,
+} from '../types';
+
+const reducer = (state: cartStates, action: cartAction) => {
+  const { type, payload } = action;
+
+  if (typeof payload === 'boolean') {
+    switch (type) {
+      case cartActionKind.SET_IS_CART_OPEN:
+        return {
+          ...state,
+          isCartOpen: payload,
+        };
+      default:
+        throw new Error();
+    }
+  } else {
+    const { newCartItems, newCartCount, newCartTotal } = payload;
+    switch (type) {
+      case cartActionKind.SET_CART_ITEMS:
+        return {
+          ...state,
+          itemsInCart: newCartItems,
+          sumOfCartItems: newCartCount,
+          cartTotal: newCartTotal,
+        };
+      default:
+        throw new Error();
+    }
+  }
+};
+
+const INITIAL_STATES: cartStates = {
+  isCartOpen: false,
+  itemsInCart: [] as itemInCartType[],
+  sumOfCartItems: 0,
+  cartTotal: 0,
+};
 
 // helper function to "addItemToCart"
 const addCartItem = (cartItems: itemInCartType[], pdtToAdd: productsType) => {
@@ -14,8 +58,8 @@ const addCartItem = (cartItems: itemInCartType[], pdtToAdd: productsType) => {
 };
 
 // helper functoin to "addQty" and "deductQty"
-const changeQty = (cartItems: itemInCartType[], tgtItem: itemInCartType, ops: "add" | "deduct") => {
-  if (ops == "add") {
+const changeQty = (cartItems: itemInCartType[], tgtItem: itemInCartType, ops: 'add' | 'deduct') => {
+  if (ops == 'add') {
     return cartItems.map((cartItem) =>
       cartItem.id === tgtItem.id ? { ...cartItem, qty: cartItem.qty + 1 } : cartItem
     );
@@ -39,10 +83,29 @@ const removeItem = (cartItems: itemInCartType[], tgtItem: itemInCartType) =>
 export const CartContext = createContext<cartContextType | emptyObj>({});
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [itemsInCart, setItemsInCart] = useState<itemInCartType[]>([] as itemInCartType[]);
-  const [sumOfCartItems, setSumOfCartItems] = useState(0);
-  const [cartTotal, setCartTotal] = useState(0);
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATES);
+  const { itemsInCart } = state;
+
+  const updateCartItemReducer = (newCartItems: itemInCartType[]) => {
+    const newCartCount = newCartItems.reduce((total, cartItem) => total + cartItem.qty, 0);
+    const newCartTotal = newCartItems.reduce(
+      (total, cartItem) => total + cartItem.qty * cartItem.price,
+      0
+    );
+
+    dispatch({
+      type: cartActionKind.SET_CART_ITEMS,
+      payload: {
+        newCartItems: newCartItems,
+        newCartCount: newCartCount,
+        newCartTotal: newCartTotal,
+      },
+    });
+  };
+
+  const setIsCartOpen = (bool: boolean) => {
+    dispatch({ type: cartActionKind.SET_IS_CART_OPEN, payload: bool });
+  };
 
   // close cart drop down
   const closeCart: MouseEventHandler = (e) => {
@@ -52,51 +115,36 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   // add new item to cart
   const addItemToCart = (pdt: productsType) => {
-    setItemsInCart(addCartItem(itemsInCart, pdt));
+    const newCartItems = addCartItem(itemsInCart, pdt);
+    updateCartItemReducer(newCartItems);
   };
 
   // add quantity to item in cart
   const addQty = (item: itemInCartType) => {
-    setItemsInCart(changeQty(itemsInCart, item, "add"));
+    const newCartItems = changeQty(itemsInCart, item, 'add');
+    updateCartItemReducer(newCartItems);
   };
 
   // deduct quantity to item in cart
   const deductQty = (item: itemInCartType) => {
-    setItemsInCart(changeQty(itemsInCart, item, "deduct"));
+    const newCartItems = changeQty(itemsInCart, item, 'deduct');
+    updateCartItemReducer(newCartItems);
   };
 
   // remove item in cart
   const removeItemInCart = (item: itemInCartType) => {
-    setItemsInCart(removeItem(itemsInCart, item));
+    const newCartItems = removeItem(itemsInCart, item);
+    updateCartItemReducer(newCartItems);
   };
 
-  // when items in cart change, re-calcuate sum of items in cart
-  useEffect(() => {
-    const newCartCount = itemsInCart.reduce((total, cartItem) => total + cartItem.qty, 0);
-    setSumOfCartItems(newCartCount);
-  }, [itemsInCart]);
-
-  // when items in cart change, re-cauculate total value of items in cart
-  useEffect(() => {
-    const newCartTotal = itemsInCart.reduce(
-      (total, cartItem) => total + cartItem.qty * cartItem.price,
-      0
-    );
-    setCartTotal(newCartTotal);
-  }, [itemsInCart]);
-
   const value = {
-    isCartOpen,
+    ...state,
     setIsCartOpen,
     closeCart,
-    itemsInCart,
     addItemToCart,
     addQty,
     deductQty,
     removeItemInCart,
-    sumOfCartItems,
-    setSumOfCartItems,
-    cartTotal,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

@@ -1,10 +1,10 @@
-import { createContext, ReactNode, useState, useEffect } from "react";
-import { User } from "firebase/auth";
-import { userContextType } from "../types";
+import { createContext, ReactNode, useState, useEffect, useReducer } from 'react';
+import { User } from 'firebase/auth';
+import { userContextType } from '../types';
 import {
   createUserDocFromAuth,
   onAuthStateChangedListener,
-} from "../utils/firebase/firebase.utils";
+} from '../utils/firebase/firebase.utils';
 // as the actual value you want to access
 export const UserContext = createContext<userContextType | null>(null);
 
