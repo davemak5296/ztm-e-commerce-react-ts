@@ -1,10 +1,10 @@
-import { useContext } from "react";
-import CatPreview from "../components/CategoryPreview/cat-preview.component";
-import { CategoriesContext } from "../contexts/categories.context";
-import "../main.css";
+import { useSelector } from 'react-redux';
+import { selectCategoriesMap } from '../store/category/categories.selector';
+import CatPreview from '../components/CategoryPreview/cat-preview.component';
+import '../main.css';
 
 const Shop = () => {
-  const { categoriesMap } = useContext(CategoriesContext);
+  const categoriesMap = useSelector(selectCategoriesMap);
 
   return (
     <main className="w-full">

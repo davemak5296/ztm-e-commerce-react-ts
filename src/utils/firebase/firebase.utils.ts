@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   signInWithRedirect,
@@ -10,7 +10,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from "firebase/auth";
+} from 'firebase/auth';
 import {
   getFirestore,
   doc,
@@ -22,17 +22,17 @@ import {
   getDocs,
   DocumentData,
   CollectionReference,
-} from "firebase/firestore";
-import { catalogType, onAuthNextFnType, productsType } from "../../types";
+} from 'firebase/firestore';
+import { catalogType, onAuthNextFnType, productsType } from '../../types';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCyRnzfQJHDNLD0BZM1MVftczEGWt2Y3fY",
-  authDomain: "ztm-crwn-2d3cc.firebaseapp.com",
-  projectId: "ztm-crwn-2d3cc",
-  storageBucket: "ztm-crwn-2d3cc.appspot.com",
-  messagingSenderId: "698305848091",
-  appId: "1:698305848091:web:46039c776d7f9cbf1629be",
+  apiKey: 'AIzaSyCyRnzfQJHDNLD0BZM1MVftczEGWt2Y3fY',
+  authDomain: 'ztm-crwn-2d3cc.firebaseapp.com',
+  projectId: 'ztm-crwn-2d3cc',
+  storageBucket: 'ztm-crwn-2d3cc.appspot.com',
+  messagingSenderId: '698305848091',
+  appId: '1:698305848091:web:46039c776d7f9cbf1629be',
 };
 
 // Initialize Firebase
@@ -41,7 +41,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
-  prompt: "select_account",
+  prompt: 'select_account',
 });
 
 export const auth = getAuth();
@@ -65,11 +65,11 @@ export const addCollectionAndDocs = async (collectionKey: string, objectsToAdd: 
   });
 
   await batch.commit();
-  console.log("done");
+  console.log('done');
 };
 
 export const getCategoriesAndDocs = async () => {
-  const categoriesRef = createCollection<catalogType>("categories");
+  const categoriesRef = createCollection<catalogType>('categories');
   const q = query(categoriesRef);
 
   const querySnapshot = await getDocs(q);
@@ -85,11 +85,11 @@ export const getCategoriesAndDocs = async () => {
   return categoryMap;
 };
 export const createUserDocFromAuth = async (
-  userAuth: UserCredential["user"],
+  userAuth: UserCredential['user'],
   additionalInfo: object = {}
   // additionalInfo: object | Record<string, never> = {}
 ) => {
-  const userDocRef = doc(db, "users", userAuth.uid);
+  const userDocRef = doc(db, 'users', userAuth.uid);
   const userSnapShot = await getDoc(userDocRef);
 
   if (!userSnapShot.exists()) {
@@ -104,7 +104,7 @@ export const createUserDocFromAuth = async (
       });
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log("error creating the user", error.message);
+        console.log('error creating the user', error.message);
       }
     }
   }
