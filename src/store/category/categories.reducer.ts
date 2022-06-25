@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { catsMapType, grandStateType } from '../../types';
+import { catalogType, catsMapType, grandStateType } from '../../types';
 
 export const categoriesSlice = createSlice({
   name: 'categories',
 
   initialState: {
-    categoriesMap: {} as catsMapType,
+    categoriesArray: [] as catalogType[],
   } as grandStateType['categories'],
 
   reducers: {
-    SET_CATEGORIES_MAP: (state: grandStateType['categories'], action) => {
-      state.categoriesMap = action.payload;
+    SET_CATEGORIES: (state: grandStateType['categories'], action) => {
+      state.categoriesArray = action.payload;
     },
   },
 });
 
-export const { SET_CATEGORIES_MAP } = categoriesSlice.actions;
+export const { SET_CATEGORIES } = categoriesSlice.actions;
 export default categoriesSlice.reducer;

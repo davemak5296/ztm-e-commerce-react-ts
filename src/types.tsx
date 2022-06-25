@@ -117,7 +117,7 @@ export interface payloadType {
 }
 
 export interface categoriesStates {
-  categoriesMap: catsMapType;
+  categoriesArray: catalogType[];
 }
 
 export interface grandStateType {
