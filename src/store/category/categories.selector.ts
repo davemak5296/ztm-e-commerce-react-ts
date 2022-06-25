@@ -1,3 +1,4 @@
-import { reduxStateType } from '../../types';
+import { grandStateType } from '../../types';
 
-export const selectCategoriesMap = (state: reduxStateType) => state.categories.categoriesMap;
+export const selectCategoriesMap = (grandState: grandStateType) =>
+  grandState.categories.categoriesMap;

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { setCategoriesMap } from '../store/category/categories.action';
-import { categoriesActionKind } from '../types';
 import { getCategoriesAndDocs } from '../utils/firebase/firebase.utils';
 import Category from './category.component';
 import CatsPreview from './cats-preview.component';
+
+import { SET_CATEGORIES_MAP } from '../store/category/categories.reducer';
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const Shop = () => {
     const getCategoriesMap = async () => {
       const newCatMap = await getCategoriesAndDocs();
       console.log(newCatMap);
-      dispatch(setCategoriesMap(categoriesActionKind.SET_CATEGORIES_MAP, newCatMap));
+      dispatch(SET_CATEGORIES_MAP(newCatMap));
     };
 
     getCategoriesMap();

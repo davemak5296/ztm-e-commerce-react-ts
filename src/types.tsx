@@ -119,15 +119,7 @@ export interface payloadType {
 export interface categoriesStates {
   categoriesMap: catsMapType;
 }
-export enum categoriesActionKind {
-  SET_CATEGORIES_MAP = 'SET_CATEGORIES_MAP',
-}
 
-export interface categoriesAction {
-  type: categoriesActionKind;
-  payload: catsMapType;
-}
-
-export interface reduxStateType {
+export interface grandStateType {
   categories: categoriesStates;
 }

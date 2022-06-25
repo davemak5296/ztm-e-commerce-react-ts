@@ -3,7 +3,7 @@ import { selectCategoriesMap } from '../store/category/categories.selector';
 import CatPreview from '../components/CategoryPreview/cat-preview.component';
 import '../main.css';
 
-const Shop = () => {
+const CatsPreview = () => {
   const categoriesMap = useSelector(selectCategoriesMap);
 
   return (
@@ -15,4 +15,4 @@ const Shop = () => {
   );
 };
 
-export default Shop;
+export default CatsPreview;
