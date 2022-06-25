@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { logger } from 'redux-logger';
-
-import { rootReducer } from './root-reducer';
+import categoriesReducer from './category/categories.reducer';
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    categories: categoriesReducer,
+  },
   middleware: [logger],
 });
