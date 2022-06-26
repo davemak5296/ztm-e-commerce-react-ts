@@ -1,13 +1,15 @@
 import { MouseEventHandler, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { CartContext } from '../../contexts/cart.context';
-import { btnTypes } from '../../types';
+import { selectCartItems } from '../../store/cart/cart.selector';
 import Button from '../Button/button.component';
 
 import styles from './cart-dropdown.styles';
 
 const CartDropDown = () => {
-  const { itemsInCart } = useContext(CartContext);
+  // const { itemsInCart } = useContext(CartContext);
+  const itemsInCart = useSelector(selectCartItems);
   const navigate = useNavigate();
 
   const navHandler: MouseEventHandler = () => {

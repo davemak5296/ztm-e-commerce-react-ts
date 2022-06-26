@@ -1,12 +1,20 @@
-import { signInWithGooglePopup, createUserDocFromAuth } from "../utils/firebase/firebase.utils";
-import "../main.css";
-import { CartContext } from "../contexts/cart.context";
-import SignUpForm from "../components/SignUpForm/sign-up-form.component";
-import SignInForm from "../components/SignInForm/sign-in-form.component";
-import { useContext } from "react";
+import { MouseEventHandler } from 'react';
+import { useDispatch } from 'react-redux';
+import SignInForm from '../components/SignInForm/sign-in-form.component';
+import SignUpForm from '../components/SignUpForm/sign-up-form.component';
+import '../main.css';
+import { SET_IS_CART_OPEN } from '../store/cart/cart.reducer';
+import { createUserDocFromAuth, signInWithGooglePopup } from '../utils/firebase/firebase.utils';
 
 const authentication = () => {
-  const { closeCart } = useContext(CartContext);
+  // const { closeCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+
+  const closeCart: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    dispatch(SET_IS_CART_OPEN(false));
+  };
+
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
     const userDocRef = await createUserDocFromAuth(user);

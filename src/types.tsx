@@ -1,20 +1,13 @@
 import { ChangeEventHandler, MouseEventHandler, ReactNode } from 'react';
 import { User } from 'firebase/auth';
 
-export type emptyObj = Record<string, never>;
-export interface category {
-  id: number;
-  title: string;
-  imageUrl: string;
-}
-
+// Component's Props
 export interface directoryProps {
   categories: category[];
 }
 export interface categoryItemProps {
   category: category;
 }
-
 export interface formInputProps {
   label: string;
   type: string;
@@ -31,6 +24,34 @@ export interface btnProps {
   clickHandler?: MouseEventHandler | (() => void);
 }
 
+export interface cartItemProps {
+  item: cartItemType;
+}
+export interface catPreviewProps {
+  cat: string;
+  products: productType[];
+}
+
+export type emptyObj = Record<string, never>;
+export interface category {
+  id: number;
+  title: string;
+  imageUrl: string;
+}
+
+export interface productType {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+}
+export type cartItemType = productType & { qty: number };
+
+export type categoriesMapType = Record<string, productType[]>;
+export interface catalogType {
+  title: string;
+  items: productType[];
+}
 export interface btnTypes {
   default: string;
   google: string;
@@ -39,64 +60,37 @@ export interface btnTypes {
   invertedInProductCard: string;
 }
 
-export interface cartItemType {
-  item: itemInCartType;
-}
 export interface userContextType {
   currUser: User | null;
   setCurrUser: (currUser: userContextType['currUser']) => void;
 }
 
 export type onAuthNextFnType = (user: User | null) => void;
-export interface productsType {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-}
-
-export type catsMapType = Record<string, productsType[]>;
 export interface catContextType {
-  categoriesMap: catsMapType;
+  categoriesMap: categoriesMapType;
   setCategoriesMap: (pdt: catContextType['categoriesMap']) => void;
 }
-
-export interface pdtCardType {
-  product: productsType;
-}
-
-export type itemInCartType = productsType & { qty: number };
 export interface cartContextType {
   isCartOpen: boolean;
   setIsCartOpen: (bool: boolean) => void;
   closeCart: MouseEventHandler;
-  itemsInCart: itemInCartType[];
-  addItemToCart: (pdt: productsType) => void;
-  addQty: (item: itemInCartType) => void;
-  deductQty: (item: itemInCartType) => void;
-  removeItemInCart: (item: itemInCartType) => void;
+  itemsInCart: cartItemType[];
+  addItemToCart: (pdt: productType) => void;
+  addQty: (item: cartItemType) => void;
+  deductQty: (item: cartItemType) => void;
+  removeItemInCart: (item: cartItemType) => void;
   sumOfCartItems: number;
   // setSumOfCartItems: (sum: number) => void;
   cartTotal: number;
-}
-
-export interface catalogType {
-  title: string;
-  items: productsType[];
-}
-
-export interface catPreviewPropType {
-  cat: string;
-  products: productsType[];
 }
 
 export type useParamsType = {
   category: string;
 };
 
-export interface cartStates {
+export interface cartState {
   isCartOpen: boolean;
-  itemsInCart: itemInCartType[];
+  itemsInCart: cartItemType[];
   sumOfCartItems: number;
   cartTotal: number;
 }
@@ -111,7 +105,7 @@ export interface cartAction {
 }
 
 export interface payloadType {
-  newCartItems: itemInCartType[];
+  newCartItems: cartItemType[];
   newCartCount: number;
   newCartTotal: number;
 }
@@ -120,6 +114,11 @@ export interface categoriesStates {
   categoriesArray: catalogType[];
 }
 
+export interface cartStateNew {
+  isCartOpen: boolean;
+  itemsInCart: cartItemType[];
+}
 export interface grandStateType {
   categories: categoriesStates;
+  cart: cartStateNew;
 }

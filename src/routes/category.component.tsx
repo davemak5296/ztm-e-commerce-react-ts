@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { selectCategoriesMap } from '../store/category/categories.selector';
-import { productsType, useParamsType } from '../types';
+import { productType, useParamsType } from '../types';
 import PdtCard from '../components/ProductCard/pdt-card.component';
 
 const Category = () => {
   const categoriesMap = useSelector(selectCategoriesMap);
 
   const { category } = useParams<keyof useParamsType>() as useParamsType;
-  const [products, setProducts] = useState<productsType[]>(categoriesMap[category]);
+  const [products, setProducts] = useState<productType[]>(categoriesMap[category]);
 
   useEffect(() => {
     setProducts(categoriesMap[category]);

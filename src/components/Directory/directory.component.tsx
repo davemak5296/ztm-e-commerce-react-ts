@@ -1,11 +1,19 @@
-import { useContext } from 'react';
+import { MouseEventHandler, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_IS_CART_OPEN } from '../../store/cart/cart.reducer';
 import { CartContext } from '../../contexts/cart.context';
 import { directoryProps } from '../../types';
 import DirectoryItem from '../DirectoryItem/directory-item.component';
 
 const Directory = (props: directoryProps) => {
   const categories = props.categories;
-  const { closeCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+
+  const closeCart: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    dispatch(SET_IS_CART_OPEN(false));
+  };
+  // const { closeCart } = useContext(CartContext);
 
   return (
     <main onClick={closeCart} className="flex w-full flex-wrap justify-between">

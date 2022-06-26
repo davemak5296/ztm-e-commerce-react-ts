@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { catPreviewPropType } from '../../types';
+import { catPreviewProps } from '../../types';
 import PdtCard from '../ProductCard/pdt-card.component';
 
-const CatPreview = (props: catPreviewPropType) => {
+const CatPreview = (props: catPreviewProps) => {
   const { cat, products } = props;
 
   return (

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { catalogType, catsMapType, grandStateType } from '../../types';
+import { catalogType, categoriesMapType, grandStateType } from '../../types';
 
 export const categoriesSlice = createSlice({
   name: 'categories',

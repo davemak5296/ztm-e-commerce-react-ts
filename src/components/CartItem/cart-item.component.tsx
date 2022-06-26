@@ -1,31 +1,37 @@
 import { MouseEventHandler, useContext } from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCartItems } from '../../store/cart/cart.selector';
+import { removeItemFromCart, clearItemInCart, addItemToCart } from '../../store/cart/cart.action';
 import { ReactComponent as MinusSign } from '../../assets/circle-minus-solid.svg';
 import { ReactComponent as PlusSign } from '../../assets/circle-plus-solid.svg';
 import { ReactComponent as CrossSign } from '../../assets/circle-xmark-solid.svg';
 
 import { CartContext } from '../../contexts/cart.context';
-import { cartItemType } from '../../types';
+import { cartItemProps } from '../../types';
 
-const CartItem = (props: cartItemType) => {
+const CartItem = (props: cartItemProps) => {
   const { item } = props;
   const { name, imageUrl, price, qty } = item;
+  const dispatch = useDispatch();
+  const itemsInCart = useSelector(selectCartItems);
 
-  const { addQty, deductQty, removeItemInCart } = useContext(CartContext);
+  // const { addQty, deductQty, removeItemInCart } = useContext(CartContext);
 
   const addOne: MouseEventHandler<HTMLOrSVGElement> = (e) => {
     e.stopPropagation();
-    addQty(item);
+    dispatch(addItemToCart(itemsInCart, item));
+    // dispatch(addQty(itemsInCart, item));
   };
 
   const deductOne: MouseEventHandler<HTMLOrSVGElement> = (e) => {
     e.stopPropagation();
-    deductQty(item);
+    dispatch(removeItemFromCart(itemsInCart, item));
+    // dispatch(deductQty(itemsInCart, item));
   };
 
   const removeItem: MouseEventHandler<HTMLOrSVGElement> = (e) => {
     e.stopPropagation();
-    removeItemInCart(item);
+    dispatch(clearItemInCart(itemsInCart, item));
   };
 
   return (

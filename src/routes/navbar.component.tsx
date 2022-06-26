@@ -1,10 +1,13 @@
-import { useContext } from 'react';
+import { useContext, MouseEventHandler } from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ReactComponent as Crwnlogo } from '../assets/crown.svg';
 import CartIcon from '../components/CartIcon/cart-icon.component';
 import CartDropDown from '../components/CartDropDown/cart-dropdown.component';
 
+import { selectIsCartOpen } from '../store/cart/cart.selector';
+import { SET_IS_CART_OPEN } from '../store/cart/cart.reducer';
 import { UserContext } from '../contexts/user.context';
 import { CartContext } from '../contexts/cart.context';
 
@@ -14,7 +17,14 @@ import '../main.css';
 
 const Navigation = () => {
   const { currUser } = useContext(UserContext) as userContextType;
-  const { isCartOpen, closeCart } = useContext(CartContext);
+  // const { isCartOpen, closeCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const isCartOpen = useSelector(selectIsCartOpen);
+
+  const closeCart: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    dispatch(SET_IS_CART_OPEN(false));
+  };
 
   return (
     <>

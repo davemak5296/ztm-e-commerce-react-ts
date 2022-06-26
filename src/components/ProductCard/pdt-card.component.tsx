@@ -1,18 +1,28 @@
 import { MouseEventHandler, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCartItems } from '../../store/cart/cart.selector';
+import { SET_IS_CART_OPEN } from '../../store/cart/cart.reducer';
+import { addItemToCart } from '../../store/cart/cart.action';
 import { CartContext } from '../../contexts/cart.context';
-import { productsType } from '../../types';
+import { productType } from '../../types';
 import Button from '../Button/button.component';
 
-const PdtCard = ({ product }: { product: productsType }) => {
+const PdtCard = ({ product }: { product: productType }) => {
   const { name, imageUrl, price } = product;
-  const { addItemToCart, setIsCartOpen, closeCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const itemsInCart = useSelector(selectCartItems);
+  // const { addItemToCart, setIsCartOpen, closeCart } = useContext(CartContext);
 
   const addPdtToCart: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
-    addItemToCart(product);
-    setIsCartOpen(true);
+    dispatch(addItemToCart(itemsInCart, product));
+    dispatch(SET_IS_CART_OPEN(true));
   };
 
+  const closeCart: MouseEventHandler = (e) => {
+    e.stopPropagation();
+    dispatch(SET_IS_CART_OPEN(false));
+  };
   return (
     <div
       onClick={closeCart}
