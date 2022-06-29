@@ -1,5 +1,6 @@
 import { ChangeEventHandler, MouseEventHandler, ReactNode } from 'react';
 import { User } from 'firebase/auth';
+import { store } from './store/store';
 
 // Component's Props
 export interface directoryProps {
@@ -112,8 +113,16 @@ export interface payloadType {
 
 export interface categoriesStates {
   categoriesArray: catalogType[];
+  isLoading: boolean;
+  error: Error | null;
 }
 
+export enum categoriesActionKind {
+  SET_CATEGORIES = 'SET_CATEGORIES',
+  FETCH_CATEGORIES_START = 'FETCH_CATEGORIES_START',
+  FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS',
+  FETCH_CATEGORIES_FAIL = 'FETCH_CATEGORIES_FAIL',
+}
 export interface cartStateNew {
   isCartOpen: boolean;
   itemsInCart: cartItemType[];
@@ -122,3 +131,4 @@ export interface grandStateType {
   categories: categoriesStates;
   cart: cartStateNew;
 }
+export type AppDispatch = typeof store.dispatch;
