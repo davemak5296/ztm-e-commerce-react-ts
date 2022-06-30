@@ -127,8 +127,13 @@ export interface cartStateNew {
   isCartOpen: boolean;
   itemsInCart: cartItemType[];
 }
+
+export interface userState {
+  currentUser: User | null;
+}
 export interface grandStateType {
   categories: categoriesStates;
   cart: cartStateNew;
+  user: userState;
 }
 export type AppDispatch = typeof store.dispatch;
