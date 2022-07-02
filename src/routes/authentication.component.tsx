@@ -2,7 +2,6 @@ import { MouseEventHandler } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SignInForm from '../components/SignInForm/sign-in-form.component';
 import SignUpForm from '../components/SignUpForm/sign-up-form.component';
-import '../main.css';
 import { SET_IS_CART_OPEN } from '../store/cart/cart.reducer';
 import { selectIsCartOpen } from '../store/cart/cart.selector';
 

@@ -1,4 +1,3 @@
-import '../main.css';
 import Directory from '../components/Directory/directory.component';
 
 const Home = () => {

@@ -4,7 +4,6 @@ import { Link, Outlet } from 'react-router-dom';
 import { ReactComponent as Crwnlogo } from '../assets/crown.svg';
 import CartDropDown from '../components/CartDropDown/cart-dropdown.component';
 import CartIcon from '../components/CartIcon/cart-icon.component';
-import '../main.css';
 import { SET_IS_CART_OPEN } from '../store/cart/cart.reducer';
 import { selectIsCartOpen } from '../store/cart/cart.selector';
 import { SIGN_OUT_START } from '../store/user/user.reducer';

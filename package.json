@@ -57,7 +57,7 @@
     "build:css": "postcss ./src/main.css -o ./src/output.css",
     "watch:css": "postcss ./src/main.css -o ./src/output.css -w",
     "start": "react-scripts start watch:css",
-    "build": "react-scripts build build:css",
+    "build": "react-scripts build",
     "dev": "vite",
     "prod": "vite build build:css",
     "test": "react-scripts test",
