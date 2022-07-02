@@ -80,9 +80,8 @@ export const signInAuthUserWithEmailAndPw = async (email: string, pw: string) =>
   return signInWithEmailAndPassword(auth, email, pw);
 };
 export const signOutUser = async () => signOut(auth);
-export const onAuthStateChangedListener = (nextFn: onAuthNextFnType) => {
+export const onAuthStateChangedListener = (nextFn: onAuthNextFnType) =>
   onAuthStateChanged(auth, nextFn);
-};
 export const getCurrentUser = () => {
   return new Promise((res, rej) => {
     const unsub = onAuthStateChanged(
@@ -96,9 +95,8 @@ export const getCurrentUser = () => {
   });
 };
 
-const createCollection = <T = DocumentData>(collectionName: string) => {
-  return collection(db, collectionName) as CollectionReference<T>;
-};
+const createCollection = <T = DocumentData>(collectionName: string) =>
+  collection(db, collectionName) as CollectionReference<T>;
 export const addCollectionAndDocs = async (collectionKey: string, objectsToAdd: catalogType[]) => {
   const collectionRef = createCollection<catalogType>(collectionKey);
 

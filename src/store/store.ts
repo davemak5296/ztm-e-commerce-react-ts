@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga';
 import categoriesReducer from './category/categories.reducer';
 import cartReducer from './cart/cart.reducer';
 import { onFetchCategories } from './category/categories.saga';
-import { rootSaga } from './root-saga';
+import rootSaga from './root-saga';
 import userReducer from './user/user.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
