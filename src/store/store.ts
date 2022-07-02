@@ -12,10 +12,9 @@ export const store = configureStore({
     categories: categoriesReducer,
     cart: cartReducer,
   },
-  middleware:
-    process.env.NODE_ENV !== 'production'
-      ? (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware, logger)
-      : undefined,
+  middleware: process.env.NODE_ENV !== 'production' ? [sagaMiddleware, logger] : [sagaMiddleware],
+  // ? (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware, logger)
+  // : undefined,
   devTools: process.env.NODE_ENV !== 'production',
 });
 
