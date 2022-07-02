@@ -2,7 +2,6 @@ import { MouseEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 import SignInForm from '../components/SignInForm/sign-in-form.component';
 import SignUpForm from '../components/SignUpForm/sign-up-form.component';
-import '../main.css';
 import { SET_IS_CART_OPEN } from '../store/cart/cart.reducer';
 import { createUserDocFromAuth, signInWithGooglePopup } from '../utils/firebase/firebase.utils';
 
