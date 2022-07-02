@@ -27,7 +27,7 @@ export const store = configureStore({
               ],
               ignoredPaths: ['user.currentUser', 'user.error'],
             },
-          }).concat(logger)
+          }).concat(sagaMiddleware, logger)
       : undefined,
   devTools: process.env.NODE_ENV !== 'production',
 });
