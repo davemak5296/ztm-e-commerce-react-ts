@@ -1,9 +1,9 @@
-import { Route, Routes } from "react-router-dom";
-import Authentication from "./routes/authentication.component";
-import Cart from "./routes/cart.component";
-import Home from "./routes/home.component";
-import Navigation from "./routes/navbar.component";
-import Shop from "./routes/shop.component";
+import { Route, Routes } from 'react-router-dom';
+import Authentication from './routes/authentication.component';
+import Cart from './routes/cart.component';
+import Home from './routes/home.component';
+import Navigation from './routes/navbar.component';
+import Shop from './routes/shop.component';
 
 const App = () => {
   return (

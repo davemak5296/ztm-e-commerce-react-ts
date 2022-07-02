@@ -9,14 +9,14 @@ export const CategoriesContext = createContext<catContextType | emptyObj>({});
 export const CategoriesProvider = ({ children }: { children: ReactNode }) => {
   const [categoriesMap, setCategoriesMap] = useState<categoriesMapType | emptyObj>({});
 
-  useEffect(() => {
-    const getCategoriesMap = async () => {
-      const newCatMap = await getCategoriesAndDocs();
-      console.log(newCatMap);
-      setCategoriesMap(newCatMap);
-    };
-    getCategoriesMap();
-  }, []);
+  // useEffect(() => {
+  //   const getCategoriesMap = async () => {
+  //     const newCatMap = await getCategoriesAndDocs();
+  //     console.log(newCatMap);
+  //     setCategoriesMap(newCatMap);
+  //   };
+  //   getCategoriesMap();
+  // }, []);
 
   // useEffect(() => {
   //   addCollectionAndDocs("categories", SHOP_DATA);
