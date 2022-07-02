@@ -9,26 +9,37 @@ import rootSaga from './root-saga';
 import userReducer from './user/user.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
+const middlewares = [sagaMiddleware, logger];
+const myMiddleware = [
+  sagaMiddleware,
+  process.env.NODE_ENV !== 'production' && logger,
+] as typeof middlewares;
 export const store = configureStore({
   reducer: {
     categories: categoriesReducer,
     cart: cartReducer,
     user: userReducer,
   },
-  middleware:
-    process.env.NODE_ENV !== 'production'
-      ? (getDefaultMiddleware) =>
-          getDefaultMiddleware({
-            serializableCheck: {
-              ignoredActions: [
-                'user/SIGN_IN_FAILED',
-                'user/SIGN_IN_SUCCESS',
-                'user/SIGN_UP_SUCCESS',
-              ],
-              ignoredPaths: ['user.currentUser', 'user.error'],
-            },
-          }).concat(sagaMiddleware, logger)
-      : undefined,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['user/SIGN_IN_FAILED', 'user/SIGN_IN_SUCCESS', 'user/SIGN_UP_SUCCESS'],
+        ignoredPaths: ['user.currentUser', 'user.error'],
+      },
+    }).concat(myMiddleware),
+  // process.env.NODE_ENV !== 'production'
+  //   ? (getDefaultMiddleware) =>
+  //       getDefaultMiddleware({
+  //         serializableCheck: {
+  //           ignoredActions: [
+  //             'user/SIGN_IN_FAILED',
+  //             'user/SIGN_IN_SUCCESS',
+  //             'user/SIGN_UP_SUCCESS',
+  //           ],
+  //           ignoredPaths: ['user.currentUser', 'user.error'],
+  //         },
+  //       }).concat(sagaMiddleware, logger)
+  //   : undefined,
   devTools: process.env.NODE_ENV !== 'production',
 });
 
