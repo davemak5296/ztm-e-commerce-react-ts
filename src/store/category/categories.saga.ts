@@ -5,7 +5,7 @@ import {
 } from './categories.reducer';
 import { getCategoriesAndDocs } from '../../utils/firebase/firebase.utils';
 import { AppDispatch } from '../../types';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, all, takeLatest } from 'redux-saga/effects';
 import { AnyAction } from 'redux';
 
 export function* fetchCategories(): Generator<unknown, any, unknown> {
@@ -18,7 +18,7 @@ export function* fetchCategories(): Generator<unknown, any, unknown> {
     yield put({ type: 'categories/FETCH_CATEGORIES_FAIL', payload: error });
   }
 }
-export function* fetchCategoriesAsync(): Generator<unknown, any, unknown> {
+export function* onFetchCategories(): Generator<unknown, any, unknown> {
   yield takeLatest('categories/SET_CATEGORIES', fetchCategories);
 }
 // export const fetchCategoriesAsync = () => async (dispatch: AppDispatch) => {
@@ -31,3 +31,7 @@ export function* fetchCategoriesAsync(): Generator<unknown, any, unknown> {
 //     dispatch(FETCH_CATEGORIES_FAIL(error));
 //   }
 // };
+
+export function* categoriesSaga(): Generator<unknown, any, unknown> {
+  yield all([call(onFetchCategories)]);
+}

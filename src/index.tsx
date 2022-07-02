@@ -14,13 +14,13 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <UserProvider>
+        {/* <UserProvider>
           <CategoriesProvider>
-            <CartProvider>
-              <App />
-            </CartProvider>
+            <CartProvider> */}
+        <App />
+        {/* </CartProvider>
           </CategoriesProvider>
-        </UserProvider>
+        </UserProvider> */}
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

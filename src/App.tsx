@@ -7,20 +7,23 @@ import Home from './routes/home.component';
 import Navigation from './routes/navbar.component';
 import Shop from './routes/shop.component';
 import { SET_USER } from './store/user/user.reducer';
-import { createUserDocFromAuth, onAuthStateChangedListener } from './utils/firebase/firebase.utils';
+import { CHECK_USER_SESSION } from './store/user/user.reducer';
+import { signOutUser } from './utils/firebase/firebase.utils';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsub = onAuthStateChangedListener((user) => {
-      console.log(user);
-      if (user) {
-        createUserDocFromAuth(user);
-      }
-      dispatch(SET_USER(user));
-    });
-    return unsub;
+    // signOutUser();
+    dispatch({ type: 'user/CHECK_USER_SESSION' });
+    // const unsub = onAuthStateChangedListener((user) => {
+    //   console.log(user);
+    //   if (user) {
+    //     createUserDocFromAuth(user);
+    //   }
+    //   dispatch(SET_USER(user));
+    // });
+    // return unsub;
   }, []);
 
   return (

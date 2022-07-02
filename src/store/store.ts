@@ -4,7 +4,8 @@ import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import categoriesReducer from './category/categories.reducer';
 import cartReducer from './cart/cart.reducer';
-import { fetchCategoriesAsync } from './category/categories.action';
+import { onFetchCategories } from './category/categories.saga';
+import { rootSaga } from './root-saga';
 import userReducer from './user/user.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -19,12 +20,17 @@ export const store = configureStore({
       ? (getDefaultMiddleware) =>
           getDefaultMiddleware({
             serializableCheck: {
-              ignoredActions: ['user/SET_USER'],
-              ignoredPaths: ['user.currentUser'],
+              ignoredActions: [
+                'user/SIGN_IN_FAILED',
+                'user/SIGN_IN_SUCCESS',
+                'user/SIGN_UP_SUCCESS',
+              ],
+              ignoredPaths: ['user.currentUser', 'user.error'],
             },
           }).concat(sagaMiddleware, logger)
       : undefined,
   devTools: process.env.NODE_ENV !== 'production',
 });
 
-sagaMiddleware.run(fetchCategoriesAsync);
+sagaMiddleware.run(rootSaga);
+// sagaMiddleware.run(onFetchCategories);

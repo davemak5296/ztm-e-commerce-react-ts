@@ -15,6 +15,7 @@ import { signOutUser } from '../utils/firebase/firebase.utils';
 import { userContextType } from '../types';
 import '../main.css';
 import { selectCurrentUser } from '../store/user/user.selector';
+import { SIGN_OUT_START } from '../store/user/user.reducer';
 
 const Navigation = () => {
   // const { currUser } = useContext(UserContext) as userContextType;
@@ -22,10 +23,12 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const isCartOpen = useSelector(selectIsCartOpen);
   const currUser = useSelector(selectCurrentUser);
-
+  const signOutHandler: MouseEventHandler = () => {
+    dispatch(SIGN_OUT_START());
+  };
   const closeCart: MouseEventHandler = (e) => {
     e.stopPropagation();
-    dispatch(SET_IS_CART_OPEN(false));
+    isCartOpen ? dispatch(SET_IS_CART_OPEN(false)) : null;
   };
 
   return (
@@ -44,7 +47,7 @@ const Navigation = () => {
             CONTACT
           </Link>
           {currUser ? (
-            <span onClick={signOutUser} className="cursor-pointer py-2.5 px-3.5">
+            <span onClick={signOutHandler} className="cursor-pointer py-2.5 px-3.5">
               SIGN OUT
             </span>
           ) : (

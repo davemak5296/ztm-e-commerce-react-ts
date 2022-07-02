@@ -1,6 +1,6 @@
 import { MouseEventHandler, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCartItems } from '../../store/cart/cart.selector';
+import { selectCartItems, selectIsCartOpen } from '../../store/cart/cart.selector';
 import { SET_IS_CART_OPEN } from '../../store/cart/cart.reducer';
 import { addItemToCart } from '../../store/cart/cart.action';
 import { CartContext } from '../../contexts/cart.context';
@@ -10,6 +10,7 @@ import Button from '../Button/button.component';
 const PdtCard = ({ product }: { product: productType }) => {
   const { name, imageUrl, price } = product;
   const dispatch = useDispatch();
+  const isCartOpen = useSelector(selectIsCartOpen);
   const itemsInCart = useSelector(selectCartItems);
   // const { addItemToCart, setIsCartOpen, closeCart } = useContext(CartContext);
 
@@ -21,7 +22,7 @@ const PdtCard = ({ product }: { product: productType }) => {
 
   const closeCart: MouseEventHandler = (e) => {
     e.stopPropagation();
-    dispatch(SET_IS_CART_OPEN(false));
+    isCartOpen ? dispatch(SET_IS_CART_OPEN(false)) : null;
   };
   return (
     <div

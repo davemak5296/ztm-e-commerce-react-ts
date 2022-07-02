@@ -130,6 +130,8 @@ export interface cartStateNew {
 
 export interface userState {
   currentUser: User | null;
+  isLoading: boolean;
+  error: Error | null;
 }
 export interface grandStateType {
   categories: categoriesStates;
