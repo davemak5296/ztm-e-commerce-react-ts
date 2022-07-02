@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { logger } from 'redux-logger';
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import categoriesReducer from './category/categories.reducer';
 import cartReducer from './cart/cart.reducer';
