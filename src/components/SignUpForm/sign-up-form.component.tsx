@@ -1,12 +1,7 @@
 import { FirebaseError } from 'firebase/app';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import {
-  createAuthUserWithEmailAndPw,
-  createUserDocFromAuth,
-} from '../../utils/firebase/firebase.utils';
 import FormInput from '../FormInput/form-input.component';
 import Button from '../Button/button.component';
-import { UserCredential } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { SIGN_UP_START } from '../../store/user/user.reducer';
 
@@ -35,11 +30,8 @@ const signUpForm = () => {
         resetFormFields();
         return;
       }
-
       try {
         dispatch(SIGN_UP_START({ email, password, displayName }));
-        // const res = (await createAuthUserWithEmailAndPw(email, password)) as UserCredential;
-        // await createUserDocFromAuth(res.user, { displayName });
         resetFormFields();
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {

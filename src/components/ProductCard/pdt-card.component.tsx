@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectCartItems, selectIsCartOpen } from '../../store/cart/cart.selector';
 import { SET_IS_CART_OPEN } from '../../store/cart/cart.reducer';
 import { addItemToCart } from '../../store/cart/cart.action';
-import { CartContext } from '../../contexts/cart.context';
 import { productType } from '../../types';
 import Button from '../Button/button.component';
 
@@ -12,7 +11,6 @@ const PdtCard = ({ product }: { product: productType }) => {
   const dispatch = useDispatch();
   const isCartOpen = useSelector(selectIsCartOpen);
   const itemsInCart = useSelector(selectCartItems);
-  // const { addItemToCart, setIsCartOpen, closeCart } = useContext(CartContext);
 
   const addPdtToCart: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
@@ -38,12 +36,7 @@ const PdtCard = ({ product }: { product: productType }) => {
         <span className="w-[90%]">{name}</span>
         <span className="w-[10%]">{price}</span>
       </div>
-      <Button
-        // varCls="hidden w-[80%] absolute top-[255px] group-hover:flex group-hover:opacity-[.85] "
-        type="button"
-        buttonType="invertedInProductCard"
-        clickHandler={addPdtToCart}
-      >
+      <Button type="button" buttonType="invertedInProductCard" clickHandler={addPdtToCart}>
         Add to cart
       </Button>
     </div>

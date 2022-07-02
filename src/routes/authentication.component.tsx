@@ -5,21 +5,14 @@ import SignUpForm from '../components/SignUpForm/sign-up-form.component';
 import '../main.css';
 import { SET_IS_CART_OPEN } from '../store/cart/cart.reducer';
 import { selectIsCartOpen } from '../store/cart/cart.selector';
-import { createUserDocFromAuth, signInWithGooglePopup } from '../utils/firebase/firebase.utils';
 
 const authentication = () => {
-  // const { closeCart } = useContext(CartContext);
   const dispatch = useDispatch();
   const isCartOpen = useSelector(selectIsCartOpen);
 
   const closeCart: MouseEventHandler = (e) => {
     e.stopPropagation();
     isCartOpen ? dispatch(SET_IS_CART_OPEN(false)) : null;
-  };
-
-  const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocFromAuth(user);
   };
 
   return (

@@ -1,25 +1,16 @@
-import { useContext, MouseEventHandler } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { MouseEventHandler } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Link, Outlet } from 'react-router-dom';
 import { ReactComponent as Crwnlogo } from '../assets/crown.svg';
-import CartIcon from '../components/CartIcon/cart-icon.component';
 import CartDropDown from '../components/CartDropDown/cart-dropdown.component';
-
-import { selectIsCartOpen } from '../store/cart/cart.selector';
-import { SET_IS_CART_OPEN } from '../store/cart/cart.reducer';
-import { UserContext } from '../contexts/user.context';
-import { CartContext } from '../contexts/cart.context';
-
-import { signOutUser } from '../utils/firebase/firebase.utils';
-import { userContextType } from '../types';
+import CartIcon from '../components/CartIcon/cart-icon.component';
 import '../main.css';
-import { selectCurrentUser } from '../store/user/user.selector';
+import { SET_IS_CART_OPEN } from '../store/cart/cart.reducer';
+import { selectIsCartOpen } from '../store/cart/cart.selector';
 import { SIGN_OUT_START } from '../store/user/user.reducer';
+import { selectCurrentUser } from '../store/user/user.selector';
 
 const Navigation = () => {
-  // const { currUser } = useContext(UserContext) as userContextType;
-  // const { isCartOpen, closeCart } = useContext(CartContext);
   const dispatch = useDispatch();
   const isCartOpen = useSelector(selectIsCartOpen);
   const currUser = useSelector(selectCurrentUser);

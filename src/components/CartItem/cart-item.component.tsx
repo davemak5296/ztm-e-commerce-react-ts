@@ -6,7 +6,6 @@ import { ReactComponent as MinusSign } from '../../assets/circle-minus-solid.svg
 import { ReactComponent as PlusSign } from '../../assets/circle-plus-solid.svg';
 import { ReactComponent as CrossSign } from '../../assets/circle-xmark-solid.svg';
 
-import { CartContext } from '../../contexts/cart.context';
 import { cartItemProps } from '../../types';
 
 const CartItem = (props: cartItemProps) => {
@@ -15,18 +14,14 @@ const CartItem = (props: cartItemProps) => {
   const dispatch = useDispatch();
   const itemsInCart = useSelector(selectCartItems);
 
-  // const { addQty, deductQty, removeItemInCart } = useContext(CartContext);
-
   const addOne: MouseEventHandler<HTMLOrSVGElement> = (e) => {
     e.stopPropagation();
     dispatch(addItemToCart(itemsInCart, item));
-    // dispatch(addQty(itemsInCart, item));
   };
 
   const deductOne: MouseEventHandler<HTMLOrSVGElement> = (e) => {
     e.stopPropagation();
     dispatch(removeItemFromCart(itemsInCart, item));
-    // dispatch(deductQty(itemsInCart, item));
   };
 
   const removeItem: MouseEventHandler<HTMLOrSVGElement> = (e) => {

@@ -14,5 +14,4 @@ const CatsPreview = () => {
     </main>
   );
 };
-
 export default CatsPreview;

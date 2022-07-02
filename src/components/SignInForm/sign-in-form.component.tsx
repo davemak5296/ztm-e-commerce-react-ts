@@ -1,16 +1,6 @@
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { FirebaseError } from 'firebase/app';
-import { UserCredential } from 'firebase/auth';
-import {
-  signInAuthUserWithEmailAndPw,
-  createUserDocFromAuth,
-  signInWithGooglePopup,
-} from '../../utils/firebase/firebase.utils';
-import {
-  EMAIL_SIGN_IN_START,
-  GOOGLE_SIGN_IN_START,
-  SIGN_OUT_START,
-} from '../../store/user/user.reducer';
+import { EMAIL_SIGN_IN_START, GOOGLE_SIGN_IN_START } from '../../store/user/user.reducer';
 import FormInput from '../FormInput/form-input.component';
 import Button from '../Button/button.component';
 import { useDispatch } from 'react-redux';
@@ -32,10 +22,6 @@ const signInForm = () => {
 
   const signInWithGoogle = () => {
     dispatch(GOOGLE_SIGN_IN_START());
-    // const handler = async () => {
-    //   await signInWithGooglePopup();
-    // };
-    // handler().catch(Error);
   };
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
@@ -44,8 +30,6 @@ const signInForm = () => {
 
       try {
         dispatch(EMAIL_SIGN_IN_START({ email, password }));
-        // const res = (await signInAuthUserWithEmailAndPw(email, password)) as UserCredential;
-
         resetFormFields();
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
@@ -105,5 +89,4 @@ const signInForm = () => {
     </div>
   );
 };
-
 export default signInForm;
