@@ -15,20 +15,14 @@ export const store = configureStore({
     cart: cartReducer,
     user: userReducer,
   },
-  middleware: process.env.NODE_ENV !== 'production' ? [sagaMiddleware, logger] : [sagaMiddleware],
-  // process.env.NODE_ENV !== 'production'
-  //   ? (getDefaultMiddleware) =>
-  //       getDefaultMiddleware({
-  //         serializableCheck: {
-  //           ignoredActions: [
-  //             'user/SIGN_IN_FAILED',
-  //             'user/SIGN_IN_SUCCESS',
-  //             'user/SIGN_UP_SUCCESS',
-  //           ],
-  //           ignoredPaths: ['user.currentUser', 'user.error'],
-  //         },
-  //       }).concat(sagaMiddleware, logger)
-  //   : undefined,
+  // middleware: process.env.NODE_ENV !== 'production' ? [sagaMiddleware, logger] : [sagaMiddleware],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['user/SIGN_IN_FAILED', 'user/SIGN_IN_SUCCESS', 'user/SIGN_UP_SUCCESS'],
+        ignoredPaths: ['user.currentUser', 'user.error'],
+      },
+    }).concat(sagaMiddleware, process.env.NODE_ENV !== 'production' ? logger : <any>[]),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
