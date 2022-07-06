@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from 'firebase/auth';
 import { grandStateType } from '../../types';
 
 export const userSlice = createSlice({
@@ -11,9 +12,6 @@ export const userSlice = createSlice({
   },
 
   reducers: {
-    SET_USER: (state: grandStateType['user'], action) => {
-      state.currentUser = action.payload;
-    },
     CHECK_USER_SESSION: () => {},
     SIGN_UP_START: (state: grandStateType['user'], action) => {
       state.isLoading = true;
@@ -21,8 +19,8 @@ export const userSlice = createSlice({
     SIGN_UP_SUCCESS: (state: grandStateType['user'], action) => {
       state.isLoading = false;
     },
-    SIGN_UP_FAILED: (state: grandStateType['user'], action) => {
-      state.error = action.payload;
+    SIGN_UP_FAILED: (state: grandStateType['user'], { payload }: PayloadAction<unknown>) => {
+      state.error = payload;
     },
     GOOGLE_SIGN_IN_START: (state: grandStateType['user']) => {
       state.isLoading = true;
@@ -30,13 +28,13 @@ export const userSlice = createSlice({
     EMAIL_SIGN_IN_START: (state: grandStateType['user'], action) => {
       state.isLoading = true;
     },
-    SIGN_IN_SUCCESS: (state: grandStateType['user'], action) => {
+    SIGN_IN_SUCCESS: (state: grandStateType['user'], { payload }: PayloadAction<User>) => {
       state.isLoading = false;
-      state.currentUser = action.payload;
+      state.currentUser = payload;
     },
-    SIGN_IN_FAILED: (state: grandStateType['user'], action) => {
+    SIGN_IN_FAILED: (state: grandStateType['user'], { payload }: PayloadAction<unknown>) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = payload;
     },
     SIGN_OUT_START: (state: grandStateType['user']) => {
       state.isLoading = true;
@@ -44,14 +42,13 @@ export const userSlice = createSlice({
     SIGN_OUT_SUCCESS: (state: grandStateType['user']) => {
       state.currentUser = null;
     },
-    SIGN_OUT_FAILED: (state: grandStateType['user'], action) => {
-      state.error = action.payload;
+    SIGN_OUT_FAILED: (state: grandStateType['user'], { payload }: PayloadAction<unknown>) => {
+      state.error = payload;
     },
   },
 });
 
 export const {
-  SET_USER,
   CHECK_USER_SESSION,
   SIGN_UP_START,
   SIGN_UP_SUCCESS,

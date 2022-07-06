@@ -1,9 +1,8 @@
-import { FirebaseError } from 'firebase/app';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import FormInput from '../FormInput/form-input.component';
 import Button from '../Button/button.component';
 import { useDispatch } from 'react-redux';
-import { SIGN_UP_START } from '../../store/user/user.reducer';
+import { SIGN_UP_FAILED, SIGN_UP_START } from '../../store/user/user.reducer';
 
 const defaultFormFields = {
   displayName: '',
@@ -34,12 +33,8 @@ const signUpForm = () => {
         dispatch(SIGN_UP_START({ email, password, displayName }));
         resetFormFields();
       } catch (error: unknown) {
-        if (error instanceof FirebaseError) {
-          console.log(error.code);
-          if (error.code === 'auth/email-already-in-use') {
-            alert('Cannot sign up, email already in use.');
-          }
-        }
+        dispatch(SIGN_UP_FAILED(error));
+        resetFormFields();
       }
     };
 

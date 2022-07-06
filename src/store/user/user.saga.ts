@@ -1,5 +1,6 @@
 import { User } from 'firebase/auth';
-import { AnyAction } from 'redux';
+import { FirebaseError } from 'firebase/app';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import {
   createAuthUserWithEmailAndPw,
@@ -9,16 +10,29 @@ import {
   signInWithGooglePopup,
   signOutUser,
 } from '../../utils/firebase/firebase.utils';
+import {
+  CHECK_USER_SESSION,
+  EMAIL_SIGN_IN_START,
+  GOOGLE_SIGN_IN_START,
+  SIGN_IN_FAILED,
+  SIGN_IN_SUCCESS,
+  SIGN_OUT_FAILED,
+  SIGN_OUT_START,
+  SIGN_OUT_SUCCESS,
+  SIGN_UP_FAILED,
+  SIGN_UP_START,
+  SIGN_UP_SUCCESS,
+} from './user.reducer';
 
 export function* getSnapShotFromUserAuth(
   userAuth: User,
   additionalInfo: object = {}
 ): Generator<any, any, any> {
   try {
-    const userSnapShot = yield call(createUserDocFromAuth, userAuth, additionalInfo);
-    yield put({ type: 'user/SIGN_IN_SUCCESS', payload: userAuth });
+    yield call(createUserDocFromAuth, userAuth, additionalInfo);
+    yield put(SIGN_IN_SUCCESS(userAuth));
   } catch (error) {
-    yield put({ type: 'user/SIGN_IN_FAILED', payload: { id: 3, error } });
+    yield put(SIGN_IN_FAILED(error));
   }
 }
 
@@ -28,29 +42,40 @@ export function* isUserAuthenticated(): Generator<any, any, any> {
     if (!userAuth) return;
     yield call(getSnapShotFromUserAuth, userAuth, {});
   } catch (error) {
-    yield put({ type: 'user/SIGN_IN_FAILED', payload: { id: 2, error } });
+    yield put(SIGN_IN_FAILED(error));
   }
 }
 
-export function* signUp(action: AnyAction): Generator<any, any, any> {
-  const { payload } = action;
+export function* signUp({
+  payload,
+}: PayloadAction<{ email: string; password: string; displayName: string }>): Generator<
+  any,
+  any,
+  any
+> {
   const { email, password, displayName } = payload;
   const additionalInfo = { displayName };
 
   try {
     const { user } = yield call(createAuthUserWithEmailAndPw, email, password);
-    yield put({ type: 'user/SIGN_UP_SUCCESS', payload: { user, additionalInfo } });
+    yield put(SIGN_UP_SUCCESS({ user, additionalInfo }));
   } catch (error) {
-    yield put({ type: 'user/SIGN_UP_FAILED', payload: error });
+    yield put(SIGN_UP_FAILED(error));
   }
 }
-export function* signInAfterSignUp(action: AnyAction): Generator<any, any, any> {
-  const { payload } = action;
+export function* signInAfterSignUp({
+  payload,
+}: PayloadAction<{ user: User; additionalInfo: { [key: string]: string } }>): Generator<
+  any,
+  any,
+  any
+> {
   const { user, additionalInfo } = payload;
   yield call(getSnapShotFromUserAuth, user, additionalInfo);
 }
-export function* signInWithEmail(action: AnyAction): Generator<any, any, any> {
-  const { payload } = action;
+export function* signInWithEmail({
+  payload,
+}: PayloadAction<{ email: string; password: string }>): Generator<any, any, any> {
   const { email, password } = payload;
 
   try {
@@ -61,7 +86,9 @@ export function* signInWithEmail(action: AnyAction): Generator<any, any, any> {
     }
     yield call(getSnapShotFromUserAuth, user);
   } catch (error) {
-    yield put({ type: 'user/SIGN_IN_FAILED', payload: { id: 1, error } });
+    if (error instanceof FirebaseError) {
+      yield put(SIGN_IN_FAILED(error));
+    }
   }
 }
 export function* signInWithGoogle(): Generator<any, any, any> {
@@ -69,34 +96,59 @@ export function* signInWithGoogle(): Generator<any, any, any> {
     const { user } = yield call(signInWithGooglePopup);
     yield call(getSnapShotFromUserAuth, user);
   } catch (error) {
-    yield put({ type: 'user/SIGN_IN_FAILED', payload: error });
+    if (error instanceof FirebaseError) {
+      yield put(SIGN_IN_FAILED(error));
+    }
   }
 }
 export function* signOut(): Generator<any, any, any> {
   try {
     yield call(signOutUser);
-    yield put({ type: 'user/SIGN_OUT_SUCCESS' });
+    yield put(SIGN_OUT_SUCCESS());
   } catch (error) {
-    yield put({ type: 'user/SIGN_OUT_FAILED', payload: error });
+    yield put(SIGN_OUT_FAILED(error));
+  }
+}
+export function* popUpError({ payload }: PayloadAction<unknown>): Generator<any, any, any> {
+  if (payload instanceof FirebaseError) {
+    switch (payload.code) {
+      case 'auth/wrong-password':
+        alert('Wrong password.');
+        break;
+      case 'auth/user-not-found':
+        alert('User not exists.');
+        break;
+      case 'auth/email-already-in-use':
+        alert('Cannot sign up, email already in use.');
+        break;
+      default:
+        console.log(payload.code);
+        break;
+    }
+  } else {
+    console.log(payload);
   }
 }
 export function* onCheckUserSession(): Generator<unknown, any, unknown> {
-  yield takeLatest('user/CHECK_USER_SESSION', isUserAuthenticated);
+  yield takeLatest(CHECK_USER_SESSION, isUserAuthenticated);
 }
 export function* onSignUpStart(): Generator<unknown, any, unknown> {
-  yield takeLatest('user/SIGN_UP_START', signUp);
+  yield takeLatest(SIGN_UP_START, signUp);
 }
 export function* onSignUpSucess(): Generator<unknown, any, unknown> {
-  yield takeLatest('user/SIGN_UP_SUCCESS', signInAfterSignUp);
+  yield takeLatest(SIGN_UP_SUCCESS, signInAfterSignUp);
 }
 export function* onEmailSignInStart(): Generator<unknown, any, unknown> {
-  yield takeLatest('user/EMAIL_SIGN_IN_START', signInWithEmail);
+  yield takeLatest(EMAIL_SIGN_IN_START, signInWithEmail);
 }
 export function* onGoogleSignInStart(): Generator<unknown, any, unknown> {
-  yield takeLatest('user/GOOGLE_SIGN_IN_START', signInWithGoogle);
+  yield takeLatest(GOOGLE_SIGN_IN_START, signInWithGoogle);
 }
 export function* onSignOutStart(): Generator<any, any, any> {
-  yield takeLatest('user/SIGN_OUT_START', signOut);
+  yield takeLatest(SIGN_OUT_START, signOut);
+}
+export function* onAuthError(): Generator<any, any, any> {
+  yield takeLatest([SIGN_IN_FAILED, SIGN_UP_FAILED], popUpError);
 }
 export function* userSaga(): Generator<unknown, any, unknown> {
   yield all([
@@ -106,5 +158,6 @@ export function* userSaga(): Generator<unknown, any, unknown> {
     call(onEmailSignInStart),
     call(onGoogleSignInStart),
     call(onSignOutStart),
+    call(onAuthError),
   ]);
 }

@@ -1,6 +1,9 @@
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import { FirebaseError } from 'firebase/app';
-import { EMAIL_SIGN_IN_START, GOOGLE_SIGN_IN_START } from '../../store/user/user.reducer';
+import {
+  EMAIL_SIGN_IN_START,
+  GOOGLE_SIGN_IN_START,
+  SIGN_IN_FAILED,
+} from '../../store/user/user.reducer';
 import FormInput from '../FormInput/form-input.component';
 import Button from '../Button/button.component';
 import { useDispatch } from 'react-redux';
@@ -32,19 +35,8 @@ const signInForm = () => {
         dispatch(EMAIL_SIGN_IN_START({ email, password }));
         resetFormFields();
       } catch (error: unknown) {
-        if (error instanceof FirebaseError) {
-          switch (error.code) {
-            case 'auth/wrong-password':
-              alert('Wrong password.');
-              break;
-            case 'auth/user-not-found':
-              alert('User not exists.');
-              break;
-            default:
-              console.log(error.code);
-              break;
-          }
-        }
+        dispatch(SIGN_IN_FAILED(error));
+        resetFormFields();
       }
     };
 
