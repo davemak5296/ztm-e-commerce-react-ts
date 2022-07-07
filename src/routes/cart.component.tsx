@@ -1,10 +1,11 @@
+import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartTotal, selectCartItems } from '../store/cart/cart.selector';
 import CartItem from '../components/CartItem/cart-item.component';
 
 const titles = ['Product', 'Description', 'Quantity', 'Price', 'Sub-total', 'Remove'];
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const itemsInCart = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
 

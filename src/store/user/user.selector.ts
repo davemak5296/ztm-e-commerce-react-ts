@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { grandStateType } from '../../types';
+import { BaseState } from '../../types';
 
-export const selectUserReducer = (grandState: grandStateType) => grandState.user;
+export const selectUserReducer = (grandState: BaseState) => grandState.user;
 
 export const selectCurrentUser = createSelector(
   [selectUserReducer],

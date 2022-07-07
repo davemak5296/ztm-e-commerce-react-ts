@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import {
   EMAIL_SIGN_IN_START,
@@ -14,7 +15,7 @@ const defaultFormFields = {
   password: '',
 };
 
-const signInForm = () => {
+const signInForm: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;

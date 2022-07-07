@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { grandStateType } from '../../types';
+import { BaseState } from '../../types';
 
-const selectCartReducer = (grandState: grandStateType) => grandState.cart;
+const selectCartReducer = (grandState: BaseState) => grandState.cart;
 
 export const selectCartItems = createSelector(
   [selectCartReducer],

@@ -3,13 +3,13 @@ import { User } from 'firebase/auth';
 import { store } from './store/store';
 
 // Component's Props
-export interface directoryProps {
-  categories: category[];
+export interface DirectoryProps {
+  categories: Category[];
 }
-export interface categoryItemProps {
-  category: category;
+export interface CategoryItemProps {
+  category: Category;
 }
-export interface formInputProps {
+export interface FormInputProps {
   label: string;
   type: string;
   name: string;
@@ -18,42 +18,45 @@ export interface formInputProps {
   required: boolean;
 }
 
-export interface btnProps {
+export interface BtnProps {
   children: ReactNode;
   type: 'button' | 'reset' | 'submit' | undefined;
-  buttonType: keyof btnTypes;
+  buttonType: keyof BtnVariants;
   clickHandler?: MouseEventHandler | (() => void);
 }
 
-export interface cartItemProps {
-  item: cartItemType;
+export interface PdtCardProps {
+  product: Product;
 }
-export interface catPreviewProps {
+export interface CartItemProps {
+  item: CartItem;
+}
+export interface CatPreviewProps {
   cat: string;
-  products: productType[];
+  products: Product[];
 }
 
-export type emptyObj = Record<string, never>;
-export interface category {
+export type EmptyObj = Record<string, never>;
+export interface Category {
   id: number;
   title: string;
   imageUrl: string;
 }
 
-export interface productType {
+export interface Product {
   id: number;
   name: string;
   imageUrl: string;
   price: number;
 }
-export type cartItemType = productType & { qty: number };
+export type CartItem = Product & { qty: number };
 
-export type categoriesMapType = Record<string, productType[]>;
-export interface catalogType {
+export type CategoriesMap = Record<string, Product[]>;
+export interface Catalog {
   title: string;
-  items: productType[];
+  items: Product[];
 }
-export interface btnTypes {
+export interface BtnVariants {
   default: string;
   google: string;
   inverted: string;
@@ -61,81 +64,30 @@ export interface btnTypes {
   invertedInProductCard: string;
 }
 
-export interface userContextType {
-  currUser: User | null;
-  setCurrUser: (currUser: userContextType['currUser']) => void;
-}
-
-export type onAuthNextFnType = (user: User | null) => void;
-export interface catContextType {
-  categoriesMap: categoriesMapType;
-  setCategoriesMap: (pdt: catContextType['categoriesMap']) => void;
-}
-export interface cartContextType {
-  isCartOpen: boolean;
-  setIsCartOpen: (bool: boolean) => void;
-  closeCart: MouseEventHandler;
-  itemsInCart: cartItemType[];
-  addItemToCart: (pdt: productType) => void;
-  addQty: (item: cartItemType) => void;
-  deductQty: (item: cartItemType) => void;
-  removeItemInCart: (item: cartItemType) => void;
-  sumOfCartItems: number;
-  // setSumOfCartItems: (sum: number) => void;
-  cartTotal: number;
-}
-
-export type useParamsType = {
+export type OnAuthNextFnType = (user: User | null) => void;
+export type UseParams = {
   category: string;
 };
 
-export interface cartState {
-  isCartOpen: boolean;
-  itemsInCart: cartItemType[];
-  sumOfCartItems: number;
-  cartTotal: number;
-}
-
-export enum cartActionKind {
-  SET_CART_ITEMS = 'SET_CART_ITEMS',
-  SET_IS_CART_OPEN = 'SET_IS_CART_OPEN',
-}
-export interface cartAction {
-  type: cartActionKind;
-  payload: payloadType | boolean;
-}
-
-export interface payloadType {
-  newCartItems: cartItemType[];
-  newCartCount: number;
-  newCartTotal: number;
-}
-
-export interface categoriesStates {
-  categoriesArray: catalogType[];
+export interface CategoriesState {
+  categoriesArray: Catalog[];
   isLoading: boolean;
   error: Error | null;
 }
 
-export enum categoriesActionKind {
-  SET_CATEGORIES = 'SET_CATEGORIES',
-  FETCH_CATEGORIES_START = 'FETCH_CATEGORIES_START',
-  FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS',
-  FETCH_CATEGORIES_FAIL = 'FETCH_CATEGORIES_FAIL',
-}
-export interface cartStateNew {
+export interface CartState {
   isCartOpen: boolean;
-  itemsInCart: cartItemType[];
+  itemsInCart: CartItem[];
 }
 
-export interface userState {
+export interface UserState {
   currentUser: User | null;
   isLoading: boolean;
   error: unknown | null;
 }
-export interface grandStateType {
-  categories: categoriesStates;
-  cart: cartStateNew;
-  user: userState;
+export interface BaseState {
+  categories: CategoriesState;
+  cart: CartState;
+  user: UserState;
 }
 export type AppDispatch = typeof store.dispatch;

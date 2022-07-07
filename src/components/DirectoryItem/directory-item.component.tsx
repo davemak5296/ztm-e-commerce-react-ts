@@ -1,9 +1,10 @@
+import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { categoryItemProps } from '../../types';
+import { CartItemProps, CategoryItemProps } from '../../types';
 
 import styles from './directory-item.styles';
 
-const DirectoryItem = (props: categoryItemProps) => {
+const DirectoryItem: React.FC<CategoryItemProps> = (props) => {
   const { title, imageUrl } = props.category;
   return (
     <div className={styles.div}>

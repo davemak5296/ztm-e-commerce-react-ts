@@ -6,6 +6,7 @@ import Cart from './routes/cart.component';
 import Home from './routes/home.component';
 import Navigation from './routes/navbar.component';
 import Shop from './routes/shop.component';
+import { CHECK_USER_SESSION } from './store/user/user.reducer';
 import { selectCurrentUser } from './store/user/user.selector';
 
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
   const currUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    dispatch({ type: 'user/CHECK_USER_SESSION' });
+    dispatch(CHECK_USER_SESSION());
   }, []);
 
   return (

@@ -1,25 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { catalogType, categoriesMapType, grandStateType } from '../../types';
+import { Catalog, CategoriesMap, BaseState } from '../../types';
 
 export const categoriesSlice = createSlice({
   name: 'categories',
 
   initialState: {
-    categoriesArray: [] as catalogType[],
+    categoriesArray: [] as Catalog[],
     isLoading: false,
     error: null,
-  } as grandStateType['categories'],
+  } as BaseState['categories'],
 
   reducers: {
     SET_CATEGORIES: () => {},
-    FETCH_CATEGORIES_START: (state: grandStateType['categories']) => {
+    FETCH_CATEGORIES_START: (state: BaseState['categories']) => {
       state.isLoading = true;
     },
-    FETCH_CATEGORIES_SUCCESS: (state: grandStateType['categories'], action) => {
+    FETCH_CATEGORIES_SUCCESS: (state: BaseState['categories'], action) => {
       state.isLoading = false;
       state.categoriesArray = action.payload;
     },
-    FETCH_CATEGORIES_FAIL: (state: grandStateType['categories'], action) => {
+    FETCH_CATEGORIES_FAIL: (state: BaseState['categories'], action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

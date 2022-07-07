@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import FormInput from '../FormInput/form-input.component';
 import Button from '../Button/button.component';
@@ -11,7 +12,7 @@ const defaultFormFields = {
   confirmPassword: '',
 };
 
-const signUpForm = () => {
+const signUpForm: React.FC = () => {
   const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;

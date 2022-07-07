@@ -1,11 +1,12 @@
+import * as React from 'react';
 import { MouseEventHandler, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_IS_CART_OPEN } from '../../store/cart/cart.reducer';
-import { directoryProps } from '../../types';
+import { DirectoryProps } from '../../types';
 import DirectoryItem from '../DirectoryItem/directory-item.component';
 import { selectIsCartOpen } from '../../store/cart/cart.selector';
 
-const Directory = (props: directoryProps) => {
+const Directory: React.FC<DirectoryProps> = (props) => {
   const categories = props.categories;
   const dispatch = useDispatch();
   const isCartOpen = useSelector(selectIsCartOpen);

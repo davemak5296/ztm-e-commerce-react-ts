@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { MouseEventHandler, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCartItems } from '../../store/cart/cart.selector';
@@ -6,9 +7,9 @@ import { ReactComponent as MinusSign } from '../../assets/circle-minus-solid.svg
 import { ReactComponent as PlusSign } from '../../assets/circle-plus-solid.svg';
 import { ReactComponent as CrossSign } from '../../assets/circle-xmark-solid.svg';
 
-import { cartItemProps } from '../../types';
+import { CartItemProps } from '../../types';
 
-const CartItem = (props: cartItemProps) => {
+const CartItem: React.FC<CartItemProps> = (props) => {
   const { item } = props;
   const { name, imageUrl, price, qty } = item;
   const dispatch = useDispatch();

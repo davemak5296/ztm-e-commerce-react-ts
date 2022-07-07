@@ -148,7 +148,7 @@ export function* onSignOutStart(): Generator<any, any, any> {
   yield takeLatest(SIGN_OUT_START, signOut);
 }
 export function* onAuthError(): Generator<any, any, any> {
-  yield takeLatest([SIGN_IN_FAILED, SIGN_UP_FAILED], popUpError);
+  yield takeLatest([SIGN_IN_FAILED, SIGN_UP_FAILED, SIGN_OUT_FAILED], popUpError);
 }
 export function* userSaga(): Generator<unknown, any, unknown> {
   yield all([

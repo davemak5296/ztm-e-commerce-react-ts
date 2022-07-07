@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { MouseEventHandler } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet } from 'react-router-dom';
@@ -9,7 +10,7 @@ import { selectIsCartOpen } from '../store/cart/cart.selector';
 import { SIGN_OUT_START } from '../store/user/user.reducer';
 import { selectCurrentUser } from '../store/user/user.selector';
 
-const Navigation = () => {
+const Navigation: React.FC = () => {
   const dispatch = useDispatch();
   const isCartOpen = useSelector(selectIsCartOpen);
   const currUser = useSelector(selectCurrentUser);

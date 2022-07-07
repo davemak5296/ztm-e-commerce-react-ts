@@ -1,6 +1,6 @@
-import { catalogType } from './types';
+import { Catalog } from './types';
 
-const SHOP_DATA: catalogType[] = [
+const SHOP_DATA: Catalog[] = [
   {
     title: 'Hats',
     items: [

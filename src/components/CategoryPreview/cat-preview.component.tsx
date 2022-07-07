@@ -1,9 +1,10 @@
+import * as React from 'react';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { catPreviewProps } from '../../types';
+import { CatPreviewProps } from '../../types';
 import PdtCard from '../ProductCard/pdt-card.component';
 
-const CatPreview = (props: catPreviewProps) => {
+const CatPreview: React.FC<CatPreviewProps> = (props) => {
   const { cat, products } = props;
 
   return (

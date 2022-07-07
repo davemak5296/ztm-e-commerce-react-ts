@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { MouseEventHandler, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -6,7 +7,7 @@ import Button from '../Button/button.component';
 
 import styles from './cart-dropdown.styles';
 
-const CartDropDown = () => {
+const CartDropDown: React.FC = () => {
   const itemsInCart = useSelector(selectCartItems);
   const navigate = useNavigate();
 

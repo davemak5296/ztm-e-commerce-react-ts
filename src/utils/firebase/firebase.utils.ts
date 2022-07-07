@@ -23,7 +23,7 @@ import {
   DocumentData,
   CollectionReference,
 } from 'firebase/firestore';
-import { catalogType, onAuthNextFnType, productType } from '../../types';
+import { Catalog, OnAuthNextFnType, Product } from '../../types';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -80,7 +80,7 @@ export const signInAuthUserWithEmailAndPw = async (email: string, pw: string) =>
   return signInWithEmailAndPassword(auth, email, pw);
 };
 export const signOutUser = async () => signOut(auth);
-export const onAuthStateChangedListener = (nextFn: onAuthNextFnType) =>
+export const onAuthStateChangedListener = (nextFn: OnAuthNextFnType) =>
   onAuthStateChanged(auth, nextFn);
 export const getCurrentUser = () => {
   return new Promise((res, rej) => {
@@ -97,8 +97,8 @@ export const getCurrentUser = () => {
 
 const createCollection = <T = DocumentData>(collectionName: string) =>
   collection(db, collectionName) as CollectionReference<T>;
-export const addCollectionAndDocs = async (collectionKey: string, objectsToAdd: catalogType[]) => {
-  const collectionRef = createCollection<catalogType>(collectionKey);
+export const addCollectionAndDocs = async (collectionKey: string, objectsToAdd: Catalog[]) => {
+  const collectionRef = createCollection<Catalog>(collectionKey);
 
   const batch = writeBatch(db);
 
@@ -111,7 +111,7 @@ export const addCollectionAndDocs = async (collectionKey: string, objectsToAdd: 
   console.log('done');
 };
 export const getCategoriesAndDocs = async () => {
-  const categoriesRef = createCollection<catalogType>('categories');
+  const categoriesRef = createCollection<Catalog>('categories');
   const q = query(categoriesRef);
 
   const querySnapshot = await getDocs(q);

@@ -1,15 +1,16 @@
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { selectCategoriesMap } from '../store/category/categories.selector';
-import { productType, useParamsType } from '../types';
+import { Product, UseParams } from '../types';
 import PdtCard from '../components/ProductCard/pdt-card.component';
 
-const Category = () => {
+const Category: React.FC = () => {
   const categoriesMap = useSelector(selectCategoriesMap);
 
-  const { category } = useParams<keyof useParamsType>() as useParamsType;
-  const [products, setProducts] = useState<productType[]>(categoriesMap[category]);
+  const { category } = useParams<keyof UseParams>() as UseParams;
+  const [products, setProducts] = useState<Product[]>(categoriesMap[category]);
 
   useEffect(() => {
     setProducts(categoriesMap[category]);

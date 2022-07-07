@@ -1,7 +1,8 @@
-import { btnProps, btnTypes } from '../../types';
+import * as React from 'react';
+import { BtnProps, BtnVariants } from '../../types';
 import styles from './button.styles';
 
-const btnStyle: btnTypes = {
+const btnStyle: BtnVariants = {
   default: styles.vanilla,
   google: styles.google,
   inverted: styles.inverted,
@@ -9,7 +10,7 @@ const btnStyle: btnTypes = {
   invertedInProductCard: styles.inverted_ProductCard,
 };
 
-const Button = (props: btnProps) => {
+const Button: React.FC<BtnProps> = (props) => {
   const { clickHandler, children, buttonType, ...otherProps } = props;
   return (
     <button onClick={clickHandler} className={btnStyle[buttonType]} {...otherProps}>

@@ -1,12 +1,13 @@
-import { MouseEventHandler, useContext } from 'react';
+import * as React from 'react';
+import { MouseEventHandler } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCartItems, selectIsCartOpen } from '../../store/cart/cart.selector';
 import { SET_IS_CART_OPEN } from '../../store/cart/cart.reducer';
 import { addItemToCart } from '../../store/cart/cart.action';
-import { productType } from '../../types';
+import { PdtCardProps } from '../../types';
 import Button from '../Button/button.component';
 
-const PdtCard = ({ product }: { product: productType }) => {
+const PdtCard: React.FC<PdtCardProps> = ({ product }) => {
   const { name, imageUrl, price } = product;
   const dispatch = useDispatch();
   const isCartOpen = useSelector(selectIsCartOpen);
