@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { selectCartTotal, selectCartItems } from '../store/cart/cart.selector';
 import CartItem from '../components/CartItem/cart-item.component';
+import PaymentForm from '../components/PaymentForm/payment-form';
 
 const titles = ['Product', 'Description', 'Quantity', 'Price', 'Sub-total', 'Remove'];
 
@@ -23,6 +24,7 @@ const Cart: React.FC = () => {
         <CartItem key={e.id} item={e} />
       ))}
       <div className="ml-auto mt-8 text-4xl">{`TOTAL: ${cartTotal}`}</div>
+      <PaymentForm />
     </main>
   );
 };

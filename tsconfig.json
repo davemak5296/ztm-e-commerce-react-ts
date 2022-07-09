@@ -26,7 +26,7 @@
     // }
   },
   "include": [
-    "src"
+    "src","netlify"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
