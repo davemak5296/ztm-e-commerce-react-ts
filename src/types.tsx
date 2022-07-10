@@ -23,6 +23,7 @@ export interface BtnProps {
   type: 'button' | 'reset' | 'submit' | undefined;
   buttonType: keyof BtnVariants;
   clickHandler?: MouseEventHandler | (() => void);
+  isLoading?: boolean;
 }
 
 export interface PdtCardProps {

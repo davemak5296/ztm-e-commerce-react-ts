@@ -11,9 +11,14 @@ const btnStyle: BtnVariants = {
 };
 
 const Button: React.FC<BtnProps> = (props) => {
-  const { clickHandler, children, buttonType, ...otherProps } = props;
+  const { clickHandler, children, buttonType, isLoading, ...otherProps } = props;
   return (
-    <button onClick={clickHandler} className={btnStyle[buttonType]} {...otherProps}>
+    <button
+      onClick={clickHandler}
+      className={btnStyle[buttonType]}
+      disabled={isLoading}
+      {...otherProps}
+    >
       {children}
     </button>
   );
