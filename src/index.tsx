@@ -7,18 +7,16 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import './main.css';
 import { HashRouter } from 'react-router-dom';
-import { Elements } from '@stripe/react-stripe-js';
-import { stripePromise } from './utils/firebase/stripe.utils';
-import { PaymentIntentResult } from '@stripe/stripe-js';
+import { StripeProvider } from './context/stripe.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <HashRouter>
-        <Elements stripe={stripePromise}>
+        <StripeProvider>
           <App />
-        </Elements>
+        </StripeProvider>
       </HashRouter>
     </Provider>
   </React.StrictMode>

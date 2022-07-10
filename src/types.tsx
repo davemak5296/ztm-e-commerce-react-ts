@@ -91,3 +91,8 @@ export interface BaseState {
   user: UserState;
 }
 export type AppDispatch = typeof store.dispatch;
+
+export type StripeContextType = {
+  clientSecret: string;
+  setClientSecret: (clientSecret: StripeContextType['clientSecret']) => void;
+};
