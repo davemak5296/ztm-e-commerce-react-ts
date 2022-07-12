@@ -19,4 +19,4 @@ const DirectoryItem: React.FC<CategoryItemProps> = (props) => {
   );
 };
 
-export default DirectoryItem;
+export default React.memo(DirectoryItem);

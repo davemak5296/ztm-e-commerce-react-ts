@@ -92,4 +92,4 @@ const signUpForm: React.FC = () => {
   );
 };
 
-export default signUpForm;
+export default React.memo(signUpForm);

@@ -25,4 +25,4 @@ const Directory: React.FC<DirectoryProps> = (props) => {
   );
 };
 
-export default Directory;
+export default React.memo(Directory);

@@ -44,4 +44,4 @@ const PdtCard: React.FC<PdtCardProps> = ({ product }) => {
   );
 };
 
-export default PdtCard;
+export default React.memo(PdtCard);

@@ -82,4 +82,4 @@ const signInForm: React.FC = () => {
     </div>
   );
 };
-export default signInForm;
+export default React.memo(signInForm);

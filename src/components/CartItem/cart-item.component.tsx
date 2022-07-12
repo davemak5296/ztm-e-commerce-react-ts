@@ -50,4 +50,4 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   );
 };
 
-export default CartItem;
+export default React.memo(CartItem);

@@ -23,4 +23,4 @@ const CatPreview: React.FC<CatPreviewProps> = (props) => {
   );
 };
 
-export default CatPreview;
+export default React.memo(CatPreview);

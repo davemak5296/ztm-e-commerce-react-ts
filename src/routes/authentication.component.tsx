@@ -23,4 +23,4 @@ const authentication: React.FC = () => {
   );
 };
 
-export default authentication;
+export default React.memo(authentication);

@@ -40,4 +40,4 @@ const CartDropDown: React.FC = () => {
   );
 };
 
-export default CartDropDown;
+export default React.memo(CartDropDown);

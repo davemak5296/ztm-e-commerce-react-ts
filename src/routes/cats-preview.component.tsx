@@ -14,4 +14,4 @@ const CatsPreview: React.FC = () => {
     </main>
   );
 };
-export default CatsPreview;
+export default React.memo(CatsPreview);

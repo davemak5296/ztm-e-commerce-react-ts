@@ -31,4 +31,4 @@ const Home: React.FC = () => {
   ];
   return <Directory categories={categories} />;
 };
-export default Home;
+export default React.memo(Home);

@@ -12,4 +12,4 @@ const Shop: React.FC = () => {
   );
 };
 
-export default Shop;
+export default React.memo(Shop);
