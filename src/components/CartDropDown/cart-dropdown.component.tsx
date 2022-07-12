@@ -2,6 +2,7 @@ import * as React from 'react';
 import { MouseEventHandler, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import clsx from 'clsx';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import Button from '../Button/button.component';
 
@@ -17,7 +18,7 @@ const CartDropDown: React.FC = () => {
 
   return (
     <div className={styles.wrapperDiv}>
-      <div className={styles.div}>
+      <div className={clsx(styles.div, itemsInCart.length == 0 && 'justify-center')}>
         {/* items */}
         {itemsInCart.map(({ id, name, imageUrl, price, qty }) => (
           <section key={id} className="mb-3.5 flex">
@@ -28,6 +29,7 @@ const CartDropDown: React.FC = () => {
             </div>
           </section>
         ))}
+        {itemsInCart.length == 0 && <div>Your cart is empty. Let&apos;s go shopping now!</div>}
       </div>
 
       <Button clickHandler={navHandler} type="button" buttonType="defaultInDropDown">

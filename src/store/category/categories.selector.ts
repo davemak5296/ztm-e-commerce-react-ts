@@ -3,7 +3,7 @@ import { CategoriesMap, BaseState } from '../../types';
 
 const selectCategoriesReducer = (grandState: BaseState) => grandState.categories;
 
-const selectCategories = createSelector(
+export const selectCategories = createSelector(
   [selectCategoriesReducer],
   (categoriesSlice) => categoriesSlice.categoriesArray
 );

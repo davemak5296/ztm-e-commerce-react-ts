@@ -6,6 +6,7 @@ import Cart from './routes/cart.component';
 import Home from './routes/home.component';
 import Navigation from './routes/navbar.component';
 import Shop from './routes/shop.component';
+import { SET_CATEGORIES } from './store/category/categories.reducer';
 import { CHECK_USER_SESSION } from './store/user/user.reducer';
 import { selectCurrentUser } from './store/user/user.selector';
 
@@ -15,6 +16,10 @@ const App = () => {
 
   useEffect(() => {
     dispatch(CHECK_USER_SESSION());
+  }, []);
+
+  useEffect(() => {
+    dispatch(SET_CATEGORIES());
   }, []);
 
   return (
