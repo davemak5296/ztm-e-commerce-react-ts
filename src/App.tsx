@@ -29,7 +29,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="shop/*" element={<Shop />} />
         <Route path="auth" element={currUser ? <Navigate to="/" /> : <Authentication />} />
-        <Route path="contact" element={<Modal />} />
+        {/* <Route path="contact" element={<Modal />} /> */}
         <Route path="cart" element={<Cart />} />
       </Route>
     </Routes>

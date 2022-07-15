@@ -41,14 +41,14 @@ const Navigation: React.FC = () => {
         </Link>
         {/* links */}
         <div className="flex h-full w-6/12 items-center justify-end">
-          <div className="cursor-pointer py-2.5 px-3.5">
+          <div className="group cursor-pointer py-2.5 px-3.5 hover:font-semibold">
             <div onClick={dropDownHandler} className="dropdown-hover dropdown">
               SHOP
               {categories.length !== 0 && (
                 <ul
                   ref={ulRef}
                   data-theme="lofi"
-                  className="dropdown-content menu rounded-box w-52 bg-base-100 p-1.5 shadow"
+                  className="dropdown-content menu rounded-box w-52 bg-base-100 p-1.5 shadow group-hover:font-medium"
                 >
                   {categories.map((item, index) => (
                     <li key={index}>
@@ -61,15 +61,18 @@ const Navigation: React.FC = () => {
               )}
             </div>
           </div>
-          <Link to="/contact" className="py-2.5 px-3.5">
+          <Link to="/contact" className="py-2.5 px-3.5 hover:font-semibold">
             CONTACT
           </Link>
           {currUser ? (
-            <span onClick={signOutHandler} className="cursor-pointer py-2.5 px-3.5">
+            <span
+              onClick={signOutHandler}
+              className="cursor-pointer py-2.5 px-3.5 hover:font-semibold"
+            >
               SIGN OUT
             </span>
           ) : (
-            <Link to="/auth" className="py-2.5 px-3.5">
+            <Link to="/auth" className="py-2.5 px-3.5 hover:font-semibold">
               SIGN IN
             </Link>
           )}
