@@ -35,7 +35,6 @@ const CartDropDown: React.FC = () => {
       <Button clickHandler={navHandler} type="button" buttonType="defaultInDropDown">
         GO TO CHECKOUT
       </Button>
-      {/* <Link to="cart">GO TO CHECKOUT</Link> */}
     </div>
   );
 };
