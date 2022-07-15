@@ -33,10 +33,12 @@ const PdtCard: React.FC<PdtCardProps> = ({ product }) => {
         src={imageUrl}
         alt={name}
       />
-      <div className="flex w-full justify-between">
-        <span className="w-[90%]">{name}</span>
-        <span className="w-[10%]">{price}</span>
+      <div className="flex w-full justify-center text-xl">
+        {name}
+        {/* <span className="w-[90%]">{name}</span> */}
+        {/* <span className="w-[10%]">{price}</span> */}
       </div>
+      <div className="badge-xl badge badge-warning absolute top-3 right-3">{`\$${price}`}</div>
       <Button type="button" buttonType="invertedInProductCard" clickHandler={addPdtToCart}>
         Add to cart
       </Button>

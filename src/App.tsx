@@ -6,6 +6,7 @@ import Cart from './routes/cart.component';
 import Home from './routes/home.component';
 import Navigation from './routes/navbar.component';
 import Shop from './routes/shop.component';
+import Modal from './components/modal';
 import { SET_CATEGORIES } from './store/category/categories.reducer';
 import { CHECK_USER_SESSION } from './store/user/user.reducer';
 import { selectCurrentUser } from './store/user/user.selector';
@@ -28,6 +29,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="shop/*" element={<Shop />} />
         <Route path="auth" element={currUser ? <Navigate to="/" /> : <Authentication />} />
+        <Route path="contact" element={<Modal />} />
         <Route path="cart" element={<Cart />} />
       </Route>
     </Routes>

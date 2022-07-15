@@ -17,3 +17,9 @@ body {
     @apply text-2xl;
   }
 }
+
+@layer components {
+  .badge-xl {
+    @apply text-lg h-8;
+  }
+}

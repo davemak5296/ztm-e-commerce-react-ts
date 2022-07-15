@@ -36,7 +36,7 @@ const Navigation: React.FC = () => {
     <>
       <nav onClick={closeCart} className="mb-6 flex h-[70px] w-full justify-between">
         {/* logo */}
-        <Link to="/" className="h-full w-[70px] p-6">
+        <Link to="/" className="h-full w-[70px] p-6 pl-2">
           <Crwnlogo className="" />
         </Link>
         {/* links */}
@@ -61,7 +61,7 @@ const Navigation: React.FC = () => {
               )}
             </div>
           </div>
-          <Link to="/shop" className="py-2.5 px-3.5">
+          <Link to="/contact" className="py-2.5 px-3.5">
             CONTACT
           </Link>
           {currUser ? (
